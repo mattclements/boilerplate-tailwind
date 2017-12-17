@@ -1,14 +1,10 @@
 var
-
-	// Config
-	config = {
-		url: 'tailwind.loc',
-		// autoprefixer: ['last 2 versions', 'IE 9', 'Safari 8']
-	},
+	// package vars
+	pkg 				= require("./package.json");
 
 	// GENERAL/CORE DEPENDENCIES
 	browserSync 		= require('browser-sync'),
-	gulp 				= require('gulp'),
+	gulp 				= require("gulp");
 	rename 				= require('gulp-rename'),
 	plumber 			= require('gulp-plumber'),
 	notify 				= require('gulp-notify'),
@@ -30,16 +26,11 @@ var
 	uglify 				= require('gulp-uglify'),
 	include 			= require('gulp-include'),
 
-	// IMG RELATED DEPENDENCIES
-	imageOptim 			= require('gulp-imageoptim'),
-
 	//SVG RELATED DEPENDENCIES
 	svgmin				= require('gulp-svgmin'),
 
 	//OTHER DEPENDENCIES
 	todo 				= require('gulp-todo'),
-
-	// del 				= require('del'),
 
 	onError = function (err) {
 		gutil.beep();
@@ -48,83 +39,21 @@ var
 		this.destroy();
 	};
 
-	// Paths
-	dist = 'assets/',
-	src = 'src/',
-
-	paths = {
-		src: {
-			sass: src + 'sass/',
-			js: src + 'js/',
-			img: src + 'img/',
-			svg: src + 'svg/',
-		},
-		dist: {
-			css: dist + 'css/',
-			js: dist + 'js/',
-			img: dist + 'img/',
-			svg: dist + 'svg/',
-		}
-	};
-
 
 /* ==========================================================================
 	STYLES
 ========================================================================== */
-// gulp.task('styles', function() {
-// 	return gulp
-// 		.src(paths.src.sass+'/**/*.scss')
-
-// 		//Any Errors
-// 		.pipe(plumber({
-// 			errorHandler: onError
-// 		}))
-
-// 		.pipe(sourcemaps.init())
-// 		.pipe(sass())
-// 		.pipe(notify({
-// 			message: "<%= file.relative %> Compiled"
-// 		}))
-
-
-// 		.pipe(autoprefixer(config.autoprefixer))
-// 		.pipe(notify({
-// 			message: "<%= file.relative %> Auto-prefixed"
-// 		}))
-
-// 		// .pipe(postcss())
-// 		.pipe(notify({
-// 			message: "<%= file.relative %> POST CSS"
-// 		}))
-
-// 		// .pipe(csscomb())
-// 		.pipe(gulp.dest(paths.dist.css))
-// 		.pipe(cssnano())
-// 		.pipe(rename({
-// 			suffix: '.min'
-// 		}))
-// 		.pipe(notify({
-// 			message: "<%= file.relative %> Minified"
-// 		}))
-// 		.pipe(sourcemaps.write('maps'))
-// 		.pipe(gulp.dest(paths.dist.css))
-
-// 		//Now Pipe into the Live Project
-// 		.pipe(browserSync.stream());
-// });
-
-
 gulp.task('styles', function() {
 	var processes = [
 		tailwindcss('tailwind.js'),
-		autoprefixer({browsers:['last 2 versions', 'IE 9', 'Safari 8']}),
+		autoprefixer(pkg.autoprefixer),
 		csssort({
-			"properties-order"			: "alphabetical",
+			"properties-order": "alphabetical",
 		})
 	];
 
 	return gulp
-		.src(paths.src.sass+'/**/*.scss')
+		.src(pkg.paths.src.sass+'/**/*.scss')
 		//Any Errors
 		.pipe(plumber({
 			errorHandler: onError
@@ -141,7 +70,7 @@ gulp.task('styles', function() {
 			message: "<%= file.relative %> POST CSS"
 		}))
 
-		.pipe(gulp.dest(paths.dist.css))
+		.pipe(gulp.dest(pkg.paths.dist.css))
 		.pipe(postcss(
 			[cssnano({preset: 'advanced'})]
 		))
@@ -155,7 +84,7 @@ gulp.task('styles', function() {
 		.pipe(size({gzip: false, showFiles: true, }))
 		.pipe(size({gzip: true, showFiles: true, }))
 
-		.pipe(gulp.dest(paths.dist.css))
+		.pipe(gulp.dest(pkg.paths.dist.css))
 
 		//Now Pipe into the Live Project
 		.pipe(browserSync.stream());
@@ -169,7 +98,7 @@ gulp.task('styles', function() {
 ========================================================================== */
 gulp.task('scripts', function() {
 		// Concatenate and Minify the main production file
-		gulp.src(paths.src.js+'production.mix.js')
+		gulp.src(pkg.paths.src.js+'production.mix.js')
 
 		// //Any Errors
 		.pipe(plumber({
@@ -178,21 +107,21 @@ gulp.task('scripts', function() {
 
 		.pipe(include())
 		.pipe(rename('production.js'))
-		.pipe(gulp.dest(paths.dist.js))
+		.pipe(gulp.dest(pkg.paths.dist.js))
 		.pipe(notify({
 			message: "JS Concatenated - <%= file.relative %>"
 		}))
 		.pipe(uglify())
 		.pipe(rename('production.min.js'))
-		.pipe(gulp.dest(paths.dist.js))
+		.pipe(gulp.dest(pkg.paths.dist.js))
 		.pipe(notify({
 			message: "JS Minified - <%= file.relative %>"
 		}))
 
 		//Minify ALL JS Files
-		gulp.src([paths.src.js+'/**/*.js', '!'+paths.src.js+'production.*'])
+		gulp.src([pkg.paths.src.js+'/**/*.js', '!'+pkg.paths.src.js+'production.*'])
 
-		.pipe(changed(paths.dist.js, {extension: '.min.js'}))
+		.pipe(changed(pkg.paths.dist.js, {extension: '.min.js'}))
 
 		// //Any Errors
 		.pipe(plumber({
@@ -203,7 +132,7 @@ gulp.task('scripts', function() {
 		.pipe(rename({
 			suffix: '.min'
 		}))
-		.pipe(gulp.dest(paths.dist.js))
+		.pipe(gulp.dest(pkg.paths.dist.js))
 		.pipe(notify({
 			message: "JS Minified - <%= file.relative %>"
 		}))
@@ -216,17 +145,17 @@ gulp.task('scripts', function() {
 	IMAGES
 ========================================================================== */
 // gulp.task('images', function() {
-// 	// gulp.src(paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
+// 	// gulp.src(pkg.paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
 // 	// .pipe(imageOptim.optimize())
 
-// 	gulp.src(paths.src.img+'/*.svg')
-// 	.pipe(changed(paths.dist.img))
+// 	gulp.src(pkg.paths.src.img+'/*.svg')
+// 	.pipe(changed(pkg.paths.dist.img))
 // 	.pipe(svgmin())
 // 	.pipe(notify({
 // 		message: "<%= file.relative %> Optimised"
 // 	}))
 
-// 	.pipe(gulp.dest(paths.dist.img))
+// 	.pipe(gulp.dest(pkg.paths.dist.img))
 // });
 
 
@@ -235,10 +164,10 @@ gulp.task('scripts', function() {
 ========================================================================== */
 gulp.task('svg', function() {
 
-	gulp.src(paths.src.svg+'/*.svg')
-	// .pipe(changed(paths.dist.svg))
+	gulp.src(pkg.paths.src.svg+'/*.svg')
+	// .pipe(changed(pkg.paths.dist.svg))
 	.pipe(svgmin())
-	.pipe(gulp.dest(paths.dist.svg))
+	.pipe(gulp.dest(pkg.paths.dist.svg))
 	.pipe(notify({
 		message: "<%= file.relative %> Optimised"
 	}))
@@ -248,10 +177,10 @@ gulp.task('svg', function() {
 	WATCH
 ========================================================================== */
 gulp.task('watch', function() {
-	gulp.watch(paths.src.sass+'/**/*', ['styles'])
-	gulp.watch(paths.src.js+'/**/*', ['scripts'], browserSync.reload);
-	gulp.watch(paths.src.svg+'/**/*', ['svg']).on('change', browserSync.reload);
-	gulp.watch(paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
+	gulp.watch(pkg.paths.src.sass+'/**/*', ['styles'])
+	gulp.watch(pkg.paths.src.js+'/**/*', ['scripts'], browserSync.reload);
+	gulp.watch(pkg.paths.src.svg+'/**/*', ['svg']).on('change', browserSync.reload);
+	// gulp.watch(pkg.paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
 
 	gulp.watch([
 			'**/*.+(php|html)'
@@ -265,7 +194,7 @@ gulp.task('watch', function() {
 gulp.task('browserSync', function() {
 	// Create a new static server
 	browserSync.init({
-		proxy: config.url,
+		proxy: pkg.urls.local,
 		port: 8080,
 		notify: false,
 		online: true,
@@ -280,8 +209,8 @@ gulp.task('browserSync', function() {
 gulp.task('todo', function() {
 	return gulp
 		.src([
-			paths.src.js+'/functions.js',
-			paths.src.sass+'/**/*.scss',
+			pkg.paths.src.js+'/functions.js',
+			pkg.paths.src.sass+'/**/*.scss',
 			'!cms/core/**/*',
 			'!cms/addons/**/*',
 			'!vendor/**/*',
