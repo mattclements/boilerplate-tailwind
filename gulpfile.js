@@ -17,10 +17,7 @@ var
 
 	//CSS/SASS RELATED DEPENDENCIES
 	sass 				= require('gulp-sass'),
-	sourcemaps 			= require('gulp-sourcemaps'),
 	size 				= require('gulp-size'),
-	// csscomb 			= require('gulp-csscomb'),
-
 
 	// NEW CSS DEPENDENCIES
 	postcss 			= require('gulp-postcss'),
@@ -38,7 +35,6 @@ var
 
 	//SVG RELATED DEPENDENCIES
 	svgmin				= require('gulp-svgmin'),
-	svgstore			= require('gulp-svgstore'),
 
 	//OTHER DEPENDENCIES
 	todo 				= require('gulp-todo'),
@@ -134,7 +130,7 @@ gulp.task('styles', function() {
 			errorHandler: onError
 		}))
 
-		.pipe(sourcemaps.init({loadMaps: true}))
+		// .pipe(sourcemaps.init({loadMaps: true}))
 		.pipe(sass())
 		.pipe(notify({
 			message: "<%= file.relative %> Compiled"
@@ -155,7 +151,7 @@ gulp.task('styles', function() {
 		.pipe(notify({
 			message: "<%= file.relative %> Minified"
 		}))
-		.pipe(sourcemaps.write('./'))
+		// .pipe(sourcemaps.write('./'))
 		.pipe(size({gzip: false, showFiles: true, }))
 		.pipe(size({gzip: true, showFiles: true, }))
 
@@ -219,19 +215,19 @@ gulp.task('scripts', function() {
 /* ==========================================================================
 	IMAGES
 ========================================================================== */
-gulp.task('images', function() {
-	// gulp.src(paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
-	// .pipe(imageOptim.optimize())
+// gulp.task('images', function() {
+// 	// gulp.src(paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
+// 	// .pipe(imageOptim.optimize())
 
-	gulp.src(paths.src.img+'/*.svg')
-	.pipe(changed(paths.dist.img))
-	.pipe(svgmin())
-	.pipe(notify({
-		message: "<%= file.relative %> Optimised"
-	}))
+// 	gulp.src(paths.src.img+'/*.svg')
+// 	.pipe(changed(paths.dist.img))
+// 	.pipe(svgmin())
+// 	.pipe(notify({
+// 		message: "<%= file.relative %> Optimised"
+// 	}))
 
-	.pipe(gulp.dest(paths.dist.img))
-});
+// 	.pipe(gulp.dest(paths.dist.img))
+// });
 
 
 /* ==========================================================================
@@ -246,14 +242,7 @@ gulp.task('svg', function() {
 	.pipe(notify({
 		message: "<%= file.relative %> Optimised"
 	}))
-	.pipe(svgstore())
-	.pipe(rename('icons.svg'))
-	.pipe(gulp.dest(paths.dist.img))
-	.pipe(notify({
-		message: "SVG Sprite Compiled"
-	}));
 });
-
 
 /* ==========================================================================
 	WATCH
@@ -318,7 +307,7 @@ gulp.task('todo', function() {
 /* ==========================================================================
 	GULP TASKS
 ========================================================================== */
-gulp.task('default', ['styles', 'scripts', 'svg', 'images', 'browserSync', 'watch']);
+gulp.task('default', ['styles', 'scripts', 'svg', 'browserSync', 'watch']);
 gulp.task('compile', ['styles', 'scripts']);
 
 
@@ -331,7 +320,6 @@ gulp.task('compile', ['styles', 'scripts']);
 //TO CONSIDER
 //Crtical CSS Inline
 //UNCSS? Didn;t work very well.
-//UPDATE MAIN BOILERPLATE
 
 
 

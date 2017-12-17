@@ -1,43 +1,70 @@
 {
   "name": "Tailwind",
   "version": "2.0.0",
-  "description": "Tailwind",
+  "description": "Amasci Boilerplate using Tailwind",
   "main": "gulpfile.js",
+  "author": "Terry Upton, Amasci Creative Limited <terry@amasci.co.uk>",
+  "copyright": "Amasci Creative",
+  "license": "UNLICENSED",
+  "private": true,
+  "paths": {
+    "src": {
+        "base":    "./src/",
+        "js":      "./src/js/",
+        "scss":    "./src/scss/",
+        "img":     "./src/img/",
+        "svg":     "./src/svg/"
+    },
+    "dist": {
+        "base":    "./assets/",
+        "css":     "./assets/css/",
+        "js":      "./assets/js/",
+        "img":     "./assets/img/",
+        "svg":     "./src/svg/"
+    },
+    "tailwindcss": {
+        "conf":    "./tailwind.js"
+    },
+    "scss": [],
+    "craftConfig": "./config/",
+    "templates": "./templates/"
+  },
+  "urls": {
+      "live": "https://www.domain.ext",
+      "local": "http://tailwind.loc",
+      "critical": "https://www.domain.ext"
+  },
+  "purgecss": [
+      "./templates/**/*.{html,twig}"
+  ],
   "dependencies": {
-    "browser-sync": "^2.18.5",
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-plumber": "^1.1.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-util": "^3.0.7",
-    "gulp-changed": "^1.3.2",
-    "gulp-sass": "^3.0.0",
-    "gulp-uglify": "^2.0.0",
-    "gulp-include": "^2.3.1",
-    "gulp-imageoptim": "^1.0.8",
-    "gulp-svgmin": "^1.2.3",
-    "gulp-svgstore": "^6.1.0",
-    "gulp-todo": "^5.2.0"
+    "lazysizes": "^2.0.6",
+    "normalize.css": "^5.0.0",
+    "picturefill": "^3.0.2"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "Amasci Creative Limited",
-  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
-    "gulp-cssnano": "^2.1.2",
+    "browser-sync": "^2.18.5",
+    "gulp": "^3.9.1",
+    "gulp-changed": "^1.3.2",
+    "gulp-include": "^2.3.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.0.0",
     "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^2.6.1",
+    "gulp-svgmin": "^1.2.3",
+    "gulp-todo": "^5.2.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
     "postcss": "^6.0.14",
     "postcss-sorting": "^3.1.0",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^18.0.0",
     "tailwindcss": "^0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
