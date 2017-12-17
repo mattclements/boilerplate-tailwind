@@ -42,6 +42,6 @@ urllist.txt
 /imager
 /scripts
 
-#Build and TMP Files
-/assets #remove this line for live projects
+#Build and TMP Files (#remove '/assets/*' line for live projects)
+/assets/*
 /assets/img/tmp/*
