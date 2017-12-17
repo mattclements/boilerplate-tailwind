@@ -1,0 +1,13 @@
+/* ==========================================================================
+	TERM STYLES
+========================================================================== */
+
+.term {
+	@extend %cf;
+	border-bottom:1px solid $lightgrey;
+	@include remit(margin-bottom, $bsu);
+
+	&:last-of-type {
+		border:0;
+	}
+}

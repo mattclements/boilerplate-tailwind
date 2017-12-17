@@ -1,0 +1,6 @@
+# exclusions from directories...
+User-agent: *
+#Disallow: /foldername/
+
+# site maps for search engines
+Sitemap: https://www.domain.ext/sitemap.xml

@@ -1,0 +1,47 @@
+#Sass Cache
+.sass-cache/
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Windows
+Thumbs.db
+
+# OsX
+.DS_Store
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+#nodejs npm modules
+/node_modules
+
+#node-cluster
+/pids
+*.sock
+
+#TODO
+TODO.json
+TODO.md
+
+# gem
+*.gem
+
+#Sitemaps
+ror.xml
+sitemap.xml
+urllist.txt
+
+#CRAFT CMS
+/craft/storage/backups/
+/craft/storage/runtime/
+/craft/storage/userphotos/
+/uploads/*
+/imager
+/scripts
+
+#Build and TMP Files
+/assets #remove this line for live projects
+/assets/img/tmp/*

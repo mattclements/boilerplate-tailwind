@@ -1,0 +1,2 @@
+# boilerplate-tailwind
+A starting boilerplate for [Craft](https://craftcms.com/) projects using [Gulp](https://gulpjs.com/), [Tailwind CSS](https://tailwindcss.com/) and porting aspects over my old static boilerplate [available here](https://github.com/terryupton/new-website-boilerplate)

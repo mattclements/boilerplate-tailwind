@@ -1,0 +1,32 @@
+/*---------------------------------------------------
+	Initial setup to import all our SASS based files.
+
+	by Terry Upton (Amasci Creative Limited)
+-----------------------------------------------------*/
+
+@tailwind preflight;
+
+@import "_settings";
+
+//Mixins loaded first to ensure they work
+@import "mixins/_IE7-padding";
+@import "mixins/_children-of-ie";
+@import "mixins/_colors";
+@import "mixins/_columns";
+@import "mixins/_hover";
+@import "mixins/_maths";
+@import "mixins/_media-queries";
+@import "mixins/_misc";
+@import "mixins/_placeholder";
+@import "mixins/_rwd-padding-margin";
+@import "mixins/_shapes";
+@import "mixins/_tint-and-shade";
+@import "mixins/_triangles";
+@import "mixins/_typography";
+
+@import "modules/_animations";
+
+@import "modules/_forms";
+@import "base/_print";
+
+@tailwind utilities;

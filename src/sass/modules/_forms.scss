@@ -1,0 +1,202 @@
+/* ==========================================================================
+	BASE FORM STYLES
+========================================================================== */
+
+//Give form elements some cursor interactions...
+label,
+input,
+textarea,
+button,
+select,
+option,
+{
+	cursor:pointer;
+}
+	%text-input:active,
+	%text-input:focus,
+	textarea:active,
+	textarea:focus{
+		cursor:text;
+		outline:none;
+	}
+
+
+
+%text-input {
+	@include font-rem(14);
+	@include remit(padding, 8 6);
+	@include remit(margin, 2 0 5 0);
+	-webkit-appearance: none;
+	border:1px solid $grey;
+	border-radius:0;
+	color: $color-text;
+	outline:none;
+
+	@include mq($regular, false, max) {
+		@include font-rem(16);
+	}
+
+	&:focus {
+		@include mq($regular, false, max) {
+			@include font-rem(16);
+		}
+	}
+
+
+
+
+}
+
+%select-list {
+	background-color:$white;
+	border:1px solid $grey;
+	overflow:hidden;
+	position: relative;
+
+	&:after {
+		@include css-triangle(down,8px, darken($grey, 20%));
+		content: '';
+		position: absolute;
+		right:$hsu+px;
+		top:35%;
+	}
+
+}
+
+
+label {
+	@include font-size(14);
+	color:$color-text;
+}
+
+#fax {
+	@apply .hidden;
+}
+
+/* ==========================================================================
+	ALL FORM STYLES
+========================================================================== */
+
+.form {
+	input,
+	select,
+	textarea {
+		@extend %text-input;
+		@include placeholder(lighten($color-text, 30%));
+		width:90%;
+
+		&:focus, &.required:focus {
+			@include placeholder($white);
+			background-color: $color-base;
+			border:1px solid rgba($white, .6);
+			color:$white;
+			outline: none;
+		}
+
+		&.required {
+			font-weight:400;
+		}
+
+		&.error {
+			@include placeholder($color-error);
+			background-color: $bg-error;
+			border: 1px solid $color-error;
+			color: $color-error;}
+	}
+
+	.submit {
+
+		@include hover() {
+			color:$color-sub;
+		}
+		background-color:transparent;
+		color:$color-base;
+		// @extend %btn;
+		@apply .terry;
+	}
+
+	&__item {
+		@include remit(margin-top, $bsu);
+
+		@include mq($small) {
+			// @include gs-span(db, 1,6);
+			// @include gs-float(db, left);
+			margin-top:0;
+
+			&:nth-of-type(2n) {
+				margin-right:0;
+			}
+
+		}
+	}
+}
+
+
+/* ==========================================================================
+	ENQUIRY FORM STYLES
+========================================================================== */
+
+// .enquiry-form {
+// 	input[type=text],
+// 	input[type=tel],
+// 	input[type=email],
+// 	select,
+// 	textarea {
+// 		@extend %text-input;
+// 		@include placeholder($color-text);
+// 		width:90%;
+
+// 		&:focus, &.required:focus {
+// 			@include placeholder($white);
+// 			border:2px solid rgba($white, .6);
+// 			background-color: $color-base;
+// 			color:$white;
+// 			outline: none;
+// 		}
+
+// 		&.required {
+// 			@include placeholder($color-sub);
+// 		}
+
+// 		&.error {
+// 			border: 1px solid $color-error;
+// 			background-color: $bg-error;
+// 			color: $color-error;
+// 			@include placeholder($color-error)
+// 		}
+// 	}
+
+// 	select {
+// 		border:0;
+// 		background-color:transparent;
+// 		width:100%;
+// 		margin:0;
+// 	}
+
+// 	.select-list {
+// 		@extend %select-list;
+// 		@include remit(margin-top, 5);
+// 		width:90%;
+// 	}
+
+// 	button {
+// 		@extend .btn-base;
+// 		@include font-size(13);
+// 		border:2px solid $white;
+// 	}
+
+// }
+
+/* ==========================================================================
+	ERROR STYLES
+========================================================================== */
+
+.error {
+	@include font-size(13);
+	@include remit(margin, 4 0 $hsu 0);
+
+	// @include shake($delay:0.6s);
+	color: $color-error;
+	float: left;
+	font-weight:bold;
+}

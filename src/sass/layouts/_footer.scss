@@ -1,0 +1,22 @@
+/* ==========================================================================
+   FOOTER STYLES
+========================================================================== */
+
+.footer {
+	@extend %cf;
+	width:100%;
+	position:relative;
+	background-color:$color-base;
+	@include remit(padding-top,$bsu);
+}
+
+
+.footer {
+
+	&__legals {
+	}
+
+	&__social {
+	}
+
+}
