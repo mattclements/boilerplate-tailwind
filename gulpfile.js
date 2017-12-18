@@ -12,6 +12,18 @@ var
 		camelize: true,
 	});
 
+var banner = [
+	"/**",
+	" * @project			<%= pkg.name %>",
+	" * @author				<%= pkg.author %>",
+	" * @build				" + $.moment().format("llll") + " ET",
+	" * @release			" + $.gitRevSync.long() + " [" + $.gitRevSync.branch() + "]",
+	" * @copyright			Copyright (c) " + $.moment().format("YYYY") + ", <%= pkg.copyright %>",
+	" *",
+	" */",
+	""
+].join("\n");
+
 	onError = function (err) {
 		gutil.beep();
 		gutil.log(gutil.colors.red(err));
@@ -51,6 +63,7 @@ gulp.task('styles', function() {
 			message: "<%= file.relative %> POST CSS"
 		}))
 
+		.pipe($.header(banner, {pkg: pkg}))
 		.pipe(gulp.dest(pkg.paths.dist.css))
 		.pipe($.postcss(
 			[$.cssnano({preset: 'advanced'})]
