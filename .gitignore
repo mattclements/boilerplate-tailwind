@@ -1,11 +1,8 @@
-#Sass Cache
-.sass-cache/
-
-# Sublime
+#Sublime
 *.sublime-project
 *.sublime-workspace
 
-# Windows
+#Windows
 Thumbs.db
 
 # OsX
@@ -15,19 +12,15 @@ Icon?
 .Spotlight-V100
 .Trashes
 
-#nodejs npm modules
+#Build Files
 /node_modules
-
-#node-cluster
-/pids
-*.sock
+.sass-cache/
+/yarn-error.log
+/npm-debug.log
 
 #TODO
 TODO.json
 TODO.md
-
-# gem
-*.gem
 
 #Sitemaps
 ror.xml
