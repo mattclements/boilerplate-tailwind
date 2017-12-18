@@ -9,37 +9,40 @@
 	"private": true,
 	"paths": {
 		"src": {
-				"base":		"./src/",
-				"js":			"./src/js/",
-				"sass": 	"./src/sass/",
-				"img": 		"./src/img/",
-				"svg":		"./src/svg/"
+			"base": "./src/",
+			"js": "./src/js/",
+			"sass": "./src/sass/",
+			"img": "./src/img/",
+			"svg": "./src/svg/"
 		},
 		"dist": {
-				"base":		"./assets/",
-				"css":		"./assets/css/",
-				"js":			"./assets/js/",
-				"img":		"./assets/img/",
-				"svg":		"./src/svg/"
+			"base": "./assets/",
+			"css": "./assets/css/",
+			"js": "./assets/js/",
+			"img": "./assets/img/",
+			"svg": "./src/svg/"
 		},
 		"tailwindcss": {
-				"conf":		"./tailwind.js"
+			"conf": "./tailwind.js"
 		},
 		"scss": [],
 		"craftConfig": "./config/",
 		"templates": "./templates/"
 	},
 	"urls": {
-		"local":			"http://tailwind.loc",
-		"live":				"https://www.domain.ext",
-		"critical":		"https://www.domain.ext"
+		"local": "http://tailwind.loc",
+		"live": "https://www.domain.ext",
+		"critical": "https://www.domain.ext"
 	},
 	"autoprefixer": {
-		"browsers":["last 2 versions", "IE 9", "Safari 8"]
+		"browsers": [
+			"last 2 versions",
+			"IE 9",
+			"Safari 8"
+		]
 	},
-
 	"purgecss": [
-			"./templates/**/*.{html,twig}"
+		"./templates/**/*.{html,twig}"
 	],
 	"dependencies": {
 		"lazysizes": "^2.0.6",
@@ -49,6 +52,7 @@
 	"devDependencies": {
 		"autoprefixer": "^7.2.3",
 		"browser-sync": "^2.18.5",
+		"cssnano": "^3.10.0",
 		"gulp": "^3.9.1",
 		"gulp-changed": "^1.3.2",
 		"gulp-include": "^2.3.1",
@@ -66,7 +70,7 @@
 		"postcss-sorting": "^3.1.0",
 		"stylelint": "^8.4.0",
 		"stylelint-config-standard": "^18.0.0",
-		"tailwindcss": "^0.3.0"
+		"tailwindcss": "^0.4.0"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
