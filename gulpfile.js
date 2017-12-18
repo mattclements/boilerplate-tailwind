@@ -115,6 +115,9 @@ gulp.task('scripts', function() {
 			message: "JS Minified - <%= file.relative %>"
 		}))
 
+		.pipe($.size({gzip: false, showFiles: true, }))
+		.pipe($.size({gzip: true, showFiles: true, }))
+
 		//Minify ALL JS Files
 		gulp.src([pkg.paths.src.js+'/**/*.js', '!'+pkg.paths.src.js+'production.*'])
 
@@ -129,10 +132,14 @@ gulp.task('scripts', function() {
 		.pipe($.rename({
 			suffix: '.min'
 		}))
+
 		.pipe(gulp.dest(pkg.paths.dist.js))
 		.pipe($.notify({
 			message: "JS Minified - <%= file.relative %>"
 		}))
+
+		.pipe($.size({gzip: false, showFiles: true, }))
+		.pipe($.size({gzip: true, showFiles: true, }))
 
 		.pipe($.browserSync.stream())
 });
@@ -247,7 +254,18 @@ gulp.task('compile', ['styles', 'scripts']);
 //Crtical CSS Inline
 //UNCSS? Didn;t work very well.
 
+// UPDATE OUTDATED
+//Package       Current Wanted Latest Package Type    URL
+//gulp-changed  1.3.2   1.3.2  3.1.1  devDependencies https://github.com/sindresorhus/gulp-changed#readme
+//gulp-notify   2.2.0   2.2.0  3.0.0  devDependencies https://github.com/mikaelbr/gulp-notify
+//gulp-uglify   2.1.2   2.1.2  3.0.0  devDependencies https://github.com/terinjokes/gulp-uglify/
+//lazysizes     2.0.7   2.0.7  4.0.1  dependencies    https://github.com/aFarkas/lazysizes#readme
+//normalize.css 5.0.0   5.0.0  7.0.0  dependencies    https://necolas.github.io/normalize.css
 
+// Browsersync too
+
+
+// Consider using Gulp Cache?
 
 
 
