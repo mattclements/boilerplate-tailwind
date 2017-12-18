@@ -272,8 +272,6 @@ gulp.task('compile', ['styles', 'scripts']);
 
 // Browsersync too
 
-
 // Consider using Gulp Cache?
-
 // Consider adding in full project size - https://www.npmjs.com/package/gulp-size
 
