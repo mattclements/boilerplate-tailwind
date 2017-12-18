@@ -1,36 +1,16 @@
 var
 	// package vars
-	pkg 				= require("./package.json");
+	pkg = require("./package.json");
 
-	// GENERAL/CORE DEPENDENCIES
-	browserSync 		= require('browser-sync'),
-	gulp 				= require("gulp");
-	rename 				= require('gulp-rename'),
-	plumber 			= require('gulp-plumber'),
-	notify 				= require('gulp-notify'),
-	gutil 				= require('gulp-util'),
-	changed 			= require('gulp-changed'),
+	//Define Gulp
+	gulp = require("gulp");
 
-	//CSS/SASS RELATED DEPENDENCIES
-	sass 				= require('gulp-sass'),
-	size 				= require('gulp-size'),
-
-	// NEW CSS DEPENDENCIES
-	postcss 			= require('gulp-postcss'),
-	tailwindcss 		= require('tailwindcss'),
-	autoprefixer 		= require('autoprefixer'),
-	cssnano 			= require('cssnano'),
-	csssort 			= require('postcss-sorting'),
-
-	// SCRIPTS RELATED DEPENDENCIES
-	uglify 				= require('gulp-uglify'),
-	include 			= require('gulp-include'),
-
-	//SVG RELATED DEPENDENCIES
-	svgmin				= require('gulp-svgmin'),
-
-	//OTHER DEPENDENCIES
-	todo 				= require('gulp-todo'),
+	// load all plugins in "devDependencies" into the variable $
+	$ = require("gulp-load-plugins")({
+		pattern: ["*"],
+		scope: ["devDependencies"],
+		camelize: true,
+	});
 
 	onError = function (err) {
 		gutil.beep();
@@ -45,49 +25,50 @@ var
 ========================================================================== */
 gulp.task('styles', function() {
 	var processes = [
-		tailwindcss('tailwind.js'),
-		autoprefixer(pkg.autoprefixer),
-		csssort({
+		$.tailwindcss('tailwind.js'),
+		$.autoprefixer(pkg.autoprefixer),
+		$.postcssSorting({
 			"properties-order": "alphabetical",
 		})
+
 	];
 
 	return gulp
 		.src(pkg.paths.src.sass+'/**/*.scss')
 		//Any Errors
-		.pipe(plumber({
+		.pipe($.plumber({
 			errorHandler: onError
 		}))
 
 		// .pipe(sourcemaps.init({loadMaps: true}))
-		.pipe(sass())
-		.pipe(notify({
+		.pipe($.sass())
+		.pipe($.notify({
 			message: "<%= file.relative %> Compiled"
 		}))
 
-		.pipe(postcss(processes))
-		.pipe(notify({
+		.pipe($.postcss(processes))
+		.pipe($.notify({
 			message: "<%= file.relative %> POST CSS"
 		}))
 
 		.pipe(gulp.dest(pkg.paths.dist.css))
-		.pipe(postcss(
-			[cssnano({preset: 'advanced'})]
+		.pipe($.postcss(
+			[$.cssnano({preset: 'advanced'})]
 		))
-		 .pipe(rename({
+		 .pipe($.rename({
 			suffix: '.min'
 		}))
-		.pipe(notify({
+		.pipe($.notify({
 			message: "<%= file.relative %> Minified"
 		}))
 		// .pipe(sourcemaps.write('./'))
-		.pipe(size({gzip: false, showFiles: true, }))
-		.pipe(size({gzip: true, showFiles: true, }))
+		.pipe($.size({gzip: false, showFiles: true, }))
+		.pipe($.size({gzip: true, showFiles: true, }))
 
 		.pipe(gulp.dest(pkg.paths.dist.css))
 
 		//Now Pipe into the Live Project
-		.pipe(browserSync.stream());
+		.pipe($.browserSync.stream());
 });
 
 
@@ -101,43 +82,43 @@ gulp.task('scripts', function() {
 		gulp.src(pkg.paths.src.js+'production.mix.js')
 
 		// //Any Errors
-		.pipe(plumber({
+		.pipe($.plumber({
 			errorHandler: onError
 		}))
 
-		.pipe(include())
-		.pipe(rename('production.js'))
+		.pipe($.include())
+		.pipe($.rename('production.js'))
 		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe(notify({
+		.pipe($.notify({
 			message: "JS Concatenated - <%= file.relative %>"
 		}))
-		.pipe(uglify())
-		.pipe(rename('production.min.js'))
+		.pipe($.uglify())
+		.pipe($.rename('production.min.js'))
 		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe(notify({
+		.pipe($.notify({
 			message: "JS Minified - <%= file.relative %>"
 		}))
 
 		//Minify ALL JS Files
 		gulp.src([pkg.paths.src.js+'/**/*.js', '!'+pkg.paths.src.js+'production.*'])
 
-		.pipe(changed(pkg.paths.dist.js, {extension: '.min.js'}))
+		.pipe($.changed(pkg.paths.dist.js, {extension: '.min.js'}))
 
 		// //Any Errors
-		.pipe(plumber({
+		.pipe($.plumber({
 			errorHandler: onError
 		}))
 
-		.pipe(uglify())
-		.pipe(rename({
+		.pipe($.uglify())
+		.pipe($.rename({
 			suffix: '.min'
 		}))
 		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe(notify({
+		.pipe($.notify({
 			message: "JS Minified - <%= file.relative %>"
 		}))
 
-		.pipe(browserSync.stream())
+		.pipe($.browserSync.stream())
 });
 
 
@@ -166,9 +147,9 @@ gulp.task('svg', function() {
 
 	gulp.src(pkg.paths.src.svg+'/*.svg')
 	// .pipe(changed(pkg.paths.dist.svg))
-	.pipe(svgmin())
+	.pipe($.svgmin())
 	.pipe(gulp.dest(pkg.paths.dist.svg))
-	.pipe(notify({
+	.pipe($.notify({
 		message: "<%= file.relative %> Optimised"
 	}))
 });
@@ -178,14 +159,14 @@ gulp.task('svg', function() {
 ========================================================================== */
 gulp.task('watch', function() {
 	gulp.watch(pkg.paths.src.sass+'/**/*', ['styles'])
-	gulp.watch(pkg.paths.src.js+'/**/*', ['scripts'], browserSync.reload);
-	gulp.watch(pkg.paths.src.svg+'/**/*', ['svg']).on('change', browserSync.reload);
+	gulp.watch(pkg.paths.src.js+'/**/*', ['scripts'], $.browserSync.reload);
+	gulp.watch(pkg.paths.src.svg+'/**/*', ['svg']).on('change', $.browserSync.reload);
 	// gulp.watch(pkg.paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
 
 	gulp.watch([
 			'**/*.+(php|html)'
 			// 'craft/templates/**/*.+(php|html|twig)',
-		]).on('change', browserSync.reload);
+		]).on('change', $.browserSync.reload);
 });
 
 /* ==========================================================================
@@ -193,7 +174,7 @@ gulp.task('watch', function() {
 ========================================================================== */
 gulp.task('browserSync', function() {
 	// Create a new static server
-	browserSync.init({
+	$.browserSync.init({
 		proxy: pkg.urls.local,
 		port: 8080,
 		notify: false,
@@ -217,7 +198,7 @@ gulp.task('todo', function() {
 			'**/*.+(php|html)'
 		])
 
-		.pipe(todo({
+		.pipe($.todo({
 			withInlineFiles: true}
 		))
 
