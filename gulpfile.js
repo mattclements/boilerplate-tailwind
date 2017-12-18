@@ -14,11 +14,13 @@ var
 
 var banner = [
 	"/**",
-	" * @project			<%= pkg.name %>",
-	" * @author				<%= pkg.author %>",
-	" * @build				" + $.moment().format("llll") + " ET",
-	" * @release			" + $.gitRevSync.long() + " [" + $.gitRevSync.branch() + "]",
-	" * @copyright			Copyright (c) " + $.moment().format("YYYY") + ", <%= pkg.copyright %>",
+	" * @project             <%= pkg.name %>",
+	" * @description         <%= pkg.description %>",
+	" * @url                 <%= pkg.urls.live %>",
+	" * @build               " + $.moment().format("llll") + " ET",
+	" * @author              <%= pkg.author %>",
+	" * @contact             <%= pkg.contact %>",
+	" * @copyright           Copyright (c) " + $.moment().format("YYYY") + ", <%= pkg.copyright %>",
 	" *",
 	" */",
 	""
@@ -99,6 +101,7 @@ gulp.task('scripts', function() {
 			errorHandler: onError
 		}))
 
+		.pipe($.header(banner, {pkg: pkg}))
 		.pipe($.include())
 		.pipe($.rename('production.js'))
 		.pipe(gulp.dest(pkg.paths.dist.js))

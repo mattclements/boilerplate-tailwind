@@ -3,8 +3,9 @@
 	"version": "2.0.0",
 	"description": "Amasci Boilerplate using Tailwind",
 	"main": "gulpfile.js",
-	"author": "Terry Upton, Amasci Creative Limited <terry@amasci.co.uk>",
-	"copyright": "Amasci Creative",
+	"author": "Terry Upton, Amasci Creative Limited",
+	"contact": "<terry@amasci.co.uk> <www.amasci.co.uk> <01908 668665>",
+	"copyright": "Amasci Creative Limited",
 	"license": "UNLICENSED",
 	"private": true,
 	"paths": {
