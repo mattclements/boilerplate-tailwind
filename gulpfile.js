@@ -1,4 +1,4 @@
-var
+const
 	// package vars
 	pkg = require("./package.json");
 
@@ -12,7 +12,7 @@ var
 		camelize: true,
 	});
 
-var banner = [
+const banner = [
 	"/**",
 	" * @project             <%= pkg.name %>",
 	" * @description         <%= pkg.description %>",
@@ -38,7 +38,7 @@ var banner = [
 	STYLES
 ========================================================================== */
 gulp.task('styles', function() {
-	var processes = [
+	const processes = [
 		$.tailwindcss('tailwind.js'),
 		$.autoprefixer(pkg.autoprefixer),
 		$.postcssSorting({
@@ -168,13 +168,24 @@ gulp.task('scripts', function() {
 ========================================================================== */
 gulp.task('svg', function() {
 
+	// const s = $.size();
+
 	gulp.src(pkg.paths.src.svg+'/*.svg')
-	// .pipe(changed(pkg.paths.dist.svg))
+	.pipe($.changed(pkg.paths.dist.svg))
 	.pipe($.svgmin())
-	.pipe(gulp.dest(pkg.paths.dist.svg))
 	.pipe($.notify({
-		message: "<%= file.relative %> Optimised"
+		message: '<%= file.relative %> Optimised'
 	}))
+	.pipe($.size({gzip: false, showFiles: false, }))
+	.pipe($.size({gzip: true, showFiles: false, }))
+
+
+	// .pipe($.notify({
+	// 	onLast: true,
+	// 	message: () => `Total Size of all SVGs : ${s.prettySize}`,
+	// }))
+
+	.pipe(gulp.dest(pkg.paths.dist.svg))
 });
 
 /* ==========================================================================
@@ -256,9 +267,6 @@ gulp.task('compile', ['styles', 'scripts']);
 
 // UPDATE OUTDATED
 //Package       Current Wanted Latest Package Type    URL
-//gulp-changed  1.3.2   1.3.2  3.1.1  devDependencies https://github.com/sindresorhus/gulp-changed#readme
-//gulp-notify   2.2.0   2.2.0  3.0.0  devDependencies https://github.com/mikaelbr/gulp-notify
-//gulp-uglify   2.1.2   2.1.2  3.0.0  devDependencies https://github.com/terinjokes/gulp-uglify/
 //lazysizes     2.0.7   2.0.7  4.0.1  dependencies    https://github.com/aFarkas/lazysizes#readme
 //normalize.css 5.0.0   5.0.0  7.0.0  dependencies    https://necolas.github.io/normalize.css
 
@@ -267,5 +275,5 @@ gulp.task('compile', ['styles', 'scripts']);
 
 // Consider using Gulp Cache?
 
-
+// Consider adding in full project size - https://www.npmjs.com/package/gulp-size
 

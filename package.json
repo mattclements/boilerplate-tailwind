@@ -21,7 +21,7 @@
 			"css": "./assets/css/",
 			"js": "./assets/js/",
 			"img": "./assets/img/",
-			"svg": "./src/svg/"
+			"svg": "./assets/svg/"
 		},
 		"tailwindcss": {
 			"conf": "./tailwind.js"
