@@ -1,21 +1,28 @@
-@if $use-slideInRight == true {
-  @include keyframes(slideInRight) {
-  	0% {
-    	opacity: 0;
-    	@include transform(translateX(2000px));
-    }
-  	100% {
-    	@include transform(translateX(0));
-    }
-  }
-}
+$keyframe-name: $name-slideInRight;
+$class-name: namespace($name-slideInRight);
 
 @mixin slideInRight($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(slideInRight);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-slideInRight) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(2000px));
+      opacity: 0;
+    }
+    100% {
+      @include transform(translateX(0));
+    }
+  }
+
+  .#{$class-name} {
+    @include slideInRight();
+  }
 }

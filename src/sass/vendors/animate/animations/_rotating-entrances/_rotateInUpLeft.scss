@@ -1,24 +1,31 @@
-@if $use-rotateInUpLeft == true {
-  @include keyframes(rotateInUpLeft) {
-    0% {
-      opacity: 0;
-      @include transform(rotate(90deg));
-      @include transform-origin(left bottom);
-    }
-    100% {
-      opacity: 1;
-      @include transform(rotate(0));
-      @include transform-origin(left bottom);
-    }
-  }
-}
+$keyframe-name: $name-rotateInUpLeft;
+$class-name: namespace($name-rotateInUpLeft);
 
 @mixin rotateInUpLeft($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(rotateInUpLeft);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-rotateInUpLeft) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(rotate(90deg));
+      @include transform-origin(left bottom);
+      opacity: 0;
+    }
+    100% {
+      @include transform(rotate(0));
+      @include transform-origin(left bottom);
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include rotateInUpLeft();
+  }
 }

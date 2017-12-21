@@ -1,28 +1,36 @@
-@if $use-bounceOut == true {
-  @include keyframes(bounceOut) {
-    0% {
-      @include transform(scale(1));
-    }
-    25% {
-      @include transform(scale(.95));
-    }
-    50% {
-      opacity: 1;
-      @include transform(scale(1.1));
-    }
-    100% {
-      opacity: 0;
-      @include transform(scale(.3));
-    }
-  }
-}
+$keyframe-name: $name-bounceOut;
+$class-name: namespace($name-bounceOut);
 
 @mixin bounceOut($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(bounceOut);
-  @include count($count);
-  @include duration($duration);
-  @include delay($delay);
-  @include function($function);
-  @include fill-mode($fill);
-  @include visibility($visibility);
+    @include animation-name($keyframe-name);
+    @include count($count);
+    @include duration($duration);
+    @include delay($delay);
+    @include function($function);
+    @include fill-mode($fill);
+    @include visibility($visibility);
+}
+
+
+@if useModule($use-bounceOut) {
+  @include keyframes($keyframe-name) {
+    0% {
+        @include transform(scale(1));
+    }
+    25% {
+        @include transform(scale(.95));
+    }
+    50% {
+        @include transform(scale(1.1));
+        opacity: 1;
+    }
+    100% {
+        @include transform(scale(.3));
+        opacity: 0;
+    }
+  }
+
+    .#{$class-name} {
+        @include bounceOut();
+    }
 }

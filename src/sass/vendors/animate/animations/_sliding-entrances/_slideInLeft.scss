@@ -1,21 +1,28 @@
-@if $use-slideInLeft == true {
-  @include keyframes(slideInLeft) {
-  	0% {
-    	opacity: 0;
-    	@include transform(translateX(-2000px));
-    }
-  	100% {
-    	@include transform(translateX(0));
-    }
-  }
-}
+$keyframe-name: $name-slideInLeft;
+$class-name: namespace($name-slideInLeft);
 
 @mixin slideInLeft($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(slideInLeft);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-slideInLeft) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(-2000px));
+      opacity: 0;
+    }
+    100% {
+      @include transform(translateX(0));
+    }
+  }
+
+  .#{$class-name} {
+    @include slideInLeft();
+  }
 }

@@ -1,21 +1,28 @@
-@if $use-zoomIn == true {
-  @include keyframes(zoomIn) {
-    0% {
-      opacity: 0;
-      @include transform(scale3d(.3, .3, .3));
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-}
+$keyframe-name: $name-zoomIn;
+$class-name: namespace($name-zoomIn);
 
 @mixin zoomIn($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(zoomIn);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-zoomIn) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(scale3d(.3, .3, .3));
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include zoomIn();
+  }
 }

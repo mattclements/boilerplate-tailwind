@@ -1,8 +1,21 @@
-@if $use-flipInY == true {
-  @include keyframes(flipInY) {
+$keyframe-name: $name-flipInY;
+$class-name: namespace($name-flipInY);
+
+@mixin flipInY($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
+}
+
+@if useModule($use-flipInY) {
+  @include keyframes($keyframe-name) {
     0% {
-      opacity: 0;
       @include transform(perspective(400px) rotateY(90deg));
+      opacity: 0;
     }
     40% {
       @include transform(perspective(400px) rotateY(-10deg));
@@ -11,18 +24,12 @@
       @include transform(perspective(400px) rotateY(10deg));
     }
     100% {
-      opacity: 1;
       @include transform(perspective(400px) rotateY(0deg));
+      opacity: 1;
     }
   }
-}
 
-@mixin flipInY($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(flipInY);
-  @include count($count);
-  @include duration($duration);
-  @include delay($delay);
-  @include function($function);
-  @include fill-mode($fill);
-  @include visibility($visibility);
+  .#{$class-name} {
+    @include flipInY();
+  }
 }

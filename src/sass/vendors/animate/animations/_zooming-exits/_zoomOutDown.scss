@@ -1,21 +1,8 @@
-@if $use-zoomOut == true {
-  @include keyframes(zoomOutDown) {
-    40% {
-      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-      opacity: 1;
-      @include transform(scale3d(.475, .475, .475) translate3d(0, -60px, 0));
-    }
-    100% {
-      animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-      opacity: 0;
-      @include transform(scale3d(.1, .1, .1) translate3d(0, 2000px, 0));
-      @include transform-origin(center bottom);
-    }
-  }
-}
+$keyframe-name: $name-zoomOut;
+$class-name: namespace($name-zoomOut);
 
-@mixin zoomOutDown($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(zoomOutDown);
+@mixin zoomOut($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
@@ -23,3 +10,24 @@
   @include fill-mode($fill);
   @include visibility($visibility);
 }
+
+@if useModule($use-zoomOut) {
+  @include keyframes($keyframe-name) {
+    40% {
+      @include transform(scale3d(.475, .475, .475) translate3d(0, -60px, 0));
+      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+      opacity: 1;
+    }
+    100% {
+      @include transform(scale3d(.1, .1, .1) translate3d(0, 2000px, 0));
+      @include transform-origin(center bottom);
+      animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+      opacity: 0;
+    }
+  }
+
+  .#{$class-name} {
+    @include zoomOut();
+  }
+}
+

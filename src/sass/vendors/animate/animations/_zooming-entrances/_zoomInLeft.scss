@@ -1,20 +1,8 @@
-@if $use-zoomInLeft == true {
-  @include keyframes(zoomInLeft) {
-    0% {
-      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-      opacity: 0;
-      @include transform(scale3d(.1, .1, .1) translate3d(-1000px, 0, 0));
-    }
-    60% {
-      animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-      opacity: 1;
-      @include transform(scale3d(.475, .475, .475) translate3d(10px, 0, 0));
-    }
-  }
-}
+$keyframe-name: $name-zoomInLeft;
+$class-name: namespace($name-zoomInLeft);
 
 @mixin zoomInLeft($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(zoomInLeft);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
@@ -22,3 +10,23 @@
   @include fill-mode($fill);
   @include visibility($visibility);
 }
+
+@if useModule($use-zoomInLeft) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(scale3d(.1, .1, .1) translate3d(-1000px, 0, 0));
+      animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+      opacity: 0;
+    }
+    60% {
+      @include transform(scale3d(.475, .475, .475) translate3d(10px, 0, 0));
+      animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include zoomInLeft();
+  }
+}
+

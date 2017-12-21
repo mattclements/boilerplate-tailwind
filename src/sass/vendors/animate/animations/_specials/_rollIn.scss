@@ -1,22 +1,29 @@
-@if $use-rollIn == true {
-  @include keyframes(rollIn) {
-    0% {
-      opacity: 0;
-      @include transform(translateX(-100%) rotate(-120deg));
-    }
-    100% {
-      opacity: 1;
-      @include transform(translateX(0px) rotate(0deg));
-    }
-  }
-}
+$keyframe-name: $name-rollIn;
+$class-name: namespace($name-rollIn);
 
 @mixin rollIn($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(rollIn);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-rollIn) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(-100%) rotate(-120deg));
+      opacity: 0;
+    }
+    100% {
+      @include transform(translateX(0px) rotate(0deg));
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include rollIn();
+  }
 }

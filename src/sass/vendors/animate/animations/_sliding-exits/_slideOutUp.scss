@@ -1,21 +1,28 @@
-@if $use-slideOutUp == true {
-  @include keyframes(slideOutUp) {
-  	0% {
-    	@include transform(translateY(0));
-    }
-  	100% {
-    	opacity: 0;
-    	@include transform(translateY(-2000px));
-    }
-  }
-}
+$keyframe-name: $name-slideOutUp;
+$class-name: namespace($name-slideOutUp);
 
 @mixin slideOutUp($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(slideOutUp);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-slideOutUp) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateY(0));
+    }
+    100% {
+      @include transform(translateY(-2000px));
+      opacity: 0;
+    }
+  }
+
+  .#{$class-name} {
+    @include slideOutUp();
+  }
 }

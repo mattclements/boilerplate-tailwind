@@ -1,18 +1,26 @@
-// originally authored by Nick Pettit - https://github.com/nickpettit/glide
-@if $use-pulse == true {
-  @include keyframes(pulse) {
-  	  0% {@include transform(scale(1));}
-     50% {@include transform(scale(1.1));}
-    100% {@include transform(scale(1));}
-  }
-}
+$keyframe-name: $name-pulse;
+$class-name: namespace($name-pulse);
 
 @mixin pulse($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(pulse);
-  @include count($count);
-  @include duration($duration);
-  @include delay($delay);
-  @include function($function);
-  @include fill-mode($fill);
-  @include visibility($visibility);
+    @include animation-name($keyframe-name);
+    @include count($count);
+    @include duration($duration);
+    @include delay($delay);
+    @include function($function);
+    @include fill-mode($fill);
+    @include visibility($visibility);
 }
+
+@if useModule($use-pulse) {
+    @include keyframes($keyframe-name) {
+        0% {@include transform(scale(1));}
+        50% {@include transform(scale(1.1));}
+        100% {@include transform(scale(1));}
+    }
+
+    .#{$class-name} {
+        @include pulse();
+    }
+}
+
+

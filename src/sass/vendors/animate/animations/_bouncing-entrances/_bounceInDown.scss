@@ -1,28 +1,36 @@
-@if $use-bounceInDown == true {
-  @include keyframes(bounceInDown) {
-    0% {
-      opacity: 0;
-      @include transform(translateY(-2000px));
-      }
-    60% {
-      opacity: 1;
-      @include transform(translateY(30px));
-    }
-    80% {
-      @include transform(translateY(-10px));
-    }
-    100% {
-      @include transform(translateY(0));
-    }
-  }
-}
+$keyframe-name: $name-bounceInDown;
+$class-name: namespace($name-bounceInDown);
 
 @mixin bounceInDown($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(bounceInDown);
-  @include count($count);
-  @include duration($duration);
-  @include delay($delay);
-  @include function($function);
-  @include fill-mode($fill);
-  @include visibility($visibility);
+    @include animation-name($keyframe-name);
+    @include count($count);
+    @include duration($duration);
+    @include delay($delay);
+    @include function($function);
+    @include fill-mode($fill);
+    @include visibility($visibility);
+}
+
+
+@if useModule($use-bounceInDown) {
+  @include keyframes($keyframe-name) {
+    0% {
+        @include transform(translateY(-2000px));
+        opacity: 0;
+      }
+    60% {
+        @include transform(translateY(30px));
+      opacity: 1;
+    }
+    80% {
+        @include transform(translateY(-10px));
+    }
+    100% {
+        @include transform(translateY(0));
+    }
+  }
+
+    .#{$class-name} {
+        @include bounceInDown();
+    }
 }

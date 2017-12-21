@@ -1,23 +1,37 @@
-@if $use-lightSpeedIn == true {
-  @include keyframes(lightSpeedOut) {
-    0% {
-      opacity: 1;
-      @include transform(translateX(0%) skewX(0deg));
-    }
-    100% {
-      opacity: 0;
-      @include transform(translateX(100%) skewX(-30deg));
-    }
-  }
-}
+$keyframe-name: $name-lightSpeedOut;
+$class-name: namespace($name-lightSpeedOut);
 
 @mixin lightSpeedOut($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(lightSpeedOut);
+  @include animation-name($keyframe-name);
   @include count($count);
-  @include function(ease-in);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-lightSpeedOut) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(100%) skewX(-30deg));
+      opacity: 0;
+    }
+    60% {
+      @include transform(translateX(-20%) skewX(30deg));
+      opacity: 1;
+    }
+    80% {
+      @include transform(translateX(0%) skewX(-15deg));
+      opacity: 1;
+    }
+    100% {
+      @include transform(translateX(0%) skewX(0deg));
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include lightSpeedOut();
+  }
 }

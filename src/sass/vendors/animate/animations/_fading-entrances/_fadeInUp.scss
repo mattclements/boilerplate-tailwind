@@ -2,7 +2,7 @@ $keyframe-name: $name-fadeInUp;
 $class-name: namespace($name-fadeInUp);
 
 @mixin fadeInUp($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name(fadeInUp);
+    @include animation-name($keyframe-name);
     @include count($count);
     @include duration($duration);
     @include delay($delay);
@@ -12,7 +12,7 @@ $class-name: namespace($name-fadeInUp);
 }
 
 @if useModule($use-fadeInUp) {
-    @include keyframes(fadeInUp) {
+    @include keyframes($keyframe-name) {
         0% {
             @include transform(translateY(20px));
             opacity: 0;}

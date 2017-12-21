@@ -1,22 +1,31 @@
-@if $use-fadeOutUpBig == true {
-  @include keyframes(fadeOutUpBig) {
-    0% {
-      opacity: 1;
-      @include transform(translateY(0));
-    }
-    100% {
-      opacity: 0;
-      @include transform(translateY(-2000px));
-    }
-  }
-}
+$keyframe-name: $name-fadeOutUpBig;
+$class-name: namespace($name-fadeOutUpBig);
 
 @mixin fadeOutUpBig($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(fadeOutUpBig);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-fadeOutUpBig) {
+  @include keyframes($keyframe-name) {
+
+    0% {
+      @include transform(translateY(0));
+      opacity: 1;
+    }
+
+    100% {
+      @include transform(translateY(-2000px));
+      opacity: 0;
+    }
+  }
+
+  .#{$class-name} {
+    @include fadeOutUpBig();
+  }
 }

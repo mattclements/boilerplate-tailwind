@@ -23,7 +23,7 @@ $class-name: namespace($name-wobble);
     100% {@include transform(translateX(0%));}
   }
 
-      .#{$class-name} {
+    .#{$class-name} {
         @include wobble();
     }
 }

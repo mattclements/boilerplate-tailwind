@@ -1,23 +1,29 @@
-// originally authored by Nick Pettit - https://github.com/nickpettit/glide
-@if $use-rollOut == true {
-  @include keyframes(rollOut) {
-    0% {
-      opacity: 1;
-      @include transform(translateX(0px) rotate(0deg));
-    }
-    100% {
-      opacity: 0;
-      @include transform(translateX(100%) rotate(120deg));
-    }
-  }
-}
+$keyframe-name: $name-rollOut;
+$class-name: namespace($name-rollOut);
 
 @mixin rollOut($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(rollOut);
+  @include animation-name($keyframe-name);
   @include count($count);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-rollOut) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(0px) rotate(0deg));
+      opacity: 1;
+    }
+    100% {
+      @include transform(translateX(100%) rotate(120deg));
+      opacity: 0;
+    }
+  }
+
+  .#{$class-name} {
+    @include rollOut();
+  }
 }

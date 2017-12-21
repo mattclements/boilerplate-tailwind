@@ -1,31 +1,37 @@
-@if $use-lightSpeedIn == true {
-  @include keyframes(lightSpeedIn) {
-  	0% {
-    	opacity: 0;
-    	@include transform(translateX(100%) skewX(-30deg));
-    }
-  	60% {
-    	opacity: 1;
-    	@include transform(translateX(-20%) skewX(30deg));
-    }
-  	80% {
-    	opacity: 1;
-    	@include transform(translateX(0%) skewX(-15deg));
-    }
-  	100% {
-    	opacity: 1;
-    	@include transform(translateX(0%) skewX(0deg));
-    }
-  }
-}
+$keyframe-name: $name-lightSpeedIn;
+$class-name: namespace($name-lightSpeedIn);
 
 @mixin lightSpeedIn($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-  @include animation-name(lightSpeedIn);
+  @include animation-name($keyframe-name);
   @include count($count);
-	@include function(ease-out);
   @include duration($duration);
   @include delay($delay);
   @include function($function);
   @include fill-mode($fill);
   @include visibility($visibility);
+}
+
+@if useModule($use-lightSpeedIn) {
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(100%) skewX(-30deg));
+      opacity: 0;
+    }
+    60% {
+      @include transform(translateX(-20%) skewX(30deg));
+      opacity: 1;
+    }
+    80% {
+      @include transform(translateX(0%) skewX(-15deg));
+      opacity: 1;
+    }
+    100% {
+      @include transform(translateX(0%) skewX(0deg));
+      opacity: 1;
+    }
+  }
+
+  .#{$class-name} {
+    @include lightSpeedIn();
+  }
 }
