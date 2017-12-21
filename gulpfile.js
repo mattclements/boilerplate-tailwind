@@ -26,13 +26,13 @@ const banner = [
 	""
 ].join("\n");
 
-	onError = function (err) {
-		gutil.beep();
-		gutil.log(gutil.colors.red(err));
+
+const	onError = function (err) {
+		$.util.beep('*-*');
+		$.util.log($.util.colors.red(err));
 		this.emit('end');
 		this.destroy();
 	};
-
 
 /* ==========================================================================
 	STYLES
