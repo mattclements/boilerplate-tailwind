@@ -35,6 +35,11 @@ urllist.txt
 /imager
 /scripts
 
-#Build and TMP Files (#remove '/assets/*' line for live projects)
-/assets/*
+#Build and TMP Files
 /assets/img/tmp/*
+
+
+±Remove these entries for new projects
+yarn.lock
+/assets/*
+
