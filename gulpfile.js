@@ -87,12 +87,27 @@ gulp.task('styles', function() {
 });
 
 
+/* ==========================================================================
+	COPY DEPENDENCIES
+========================================================================== */
+gulp.task('copy', function() {
 
+		// Copy any JS dependencies from node_modeules to our pkg.paths.src.js folder
+		gulp.src(pkg.vendors.js)
+		.pipe($.changed(pkg.paths.src.js))
+		.pipe(gulp.dest(pkg.paths.src.js))
+		.pipe($.notify({
+			message: "<%= file.relative %> Copied"
+		}))
+		.pipe($.size({gzip: false, showFiles: true, }))
+
+
+});
 
 /* ==========================================================================
 	SCRIPTS
 ========================================================================== */
-gulp.task('scripts', function() {
+gulp.task('scripts', ["copy"], function() {
 		// Concatenate and Minify the main production file
 		gulp.src(pkg.paths.src.js+'production.mix.js')
 
