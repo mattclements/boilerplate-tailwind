@@ -1,4 +1,3 @@
-// originally authored by Nick Pettit - https://github.com/nickpettit/glide
 @if $use-jello == true {
   @include keyframes(jello) {
      from, 11.1%, to {transform: none;}

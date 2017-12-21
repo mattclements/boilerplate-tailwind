@@ -1,0 +1,137 @@
+// ************************************************************************
+//
+// Animate.scss
+// Animation Name Settings
+//
+// Set the generated class names & keyframe identifiers for the animations
+// Allows you to change between hyphenated, camelCase or whatever suits you
+//
+// ************************************************************************
+
+
+// Base Class Name
+// Used for the classes that must be set alongside every animation
+$name-base              :           'animated'          !default;
+
+
+// Namespace Prefix
+// Prefixes a string to all animation class names
+// Useful for BEM naming (eg. 'animate--' makes '.animate--bounce-in')
+$name-prefix            :           ''                  !default;
+
+
+// Fade Enter
+$name-fadeIn             :          'fadeIn'             !default;
+$name-fadeInUp           :          'fadeInUp'           !default;
+$name-fadeInUpBig        :          'fadeInUpBig'        !default;
+$name-fadeInDown         :          'fadeInDown'         !default;
+$name-fadeInDownBig      :          'fadeInDownBig'      !default;
+$name-fadeInLeft         :          'fadeInLeft'         !default;
+$name-fadeInLeftBig      :          'fadeInLeftBig'      !default;
+$name-fadeInRight        :          'fadeInRight'        !default;
+$name-fadeInRightBig     :          'fadeInRightBig'     !default;
+
+
+//Fade       Exit
+$name-fadeOut            :          'fadeOut'            !default;
+$name-fadeOutUp          :          'fadeOutUp'          !default;
+$name-fadeOutUpBig       :          'fadeOutUpBig'       !default;
+$name-fadeOutDown        :          'fadeOutDown'        !default;
+$name-fadeOutDownBig     :          'fadeOutDownBig'     !default;
+$name-fadeOutLeft        :          'fadeOutLeft'        !default;
+$name-fadeOutLeftBig     :          'fadeOutLeftBig'     !default;
+$name-fadeOutRight       :          'fadeOutRight'       !default;
+$name-fadeOutRightBig    :          'fadeOutRightBig'    !default;
+
+
+//Bounce     Enter
+$name-bounceIn           :          'bounceIn'           !default;
+$name-bounceInUp         :          'bounceInUp'         !default;
+$name-bounceInDown       :          'bounceInDown'       !default;
+$name-bounceInLeft       :          'bounceInLeft'       !default;
+$name-bounceInRight      :          'bounceInRight'      !default;
+
+
+//Bounce     Exit
+$name-bounceOut          :          'bounceOut'          !default;
+$name-bounceOutUp        :          'bounceOutUp'        !default;
+$name-bounceOutDown      :          'bounceOutDown'      !default;
+$name-bounceOutLeft      :          'bounceOutLeft'      !default;
+$name-bounceOutRight     :          'bounceOutRight'     !default;
+
+
+//Rotate     Enter
+$name-rotateIn           :          'rotateIn'           !default;
+$name-rotateInUpLeft     :          'rotateInUpLeft'     !default;
+$name-rotateInUpRight    :          'rotateInUpRight'    !default;
+$name-rotateInDownLeft   :          'rotateInDownLeft'   !default;
+$name-rotateInDownRight  :          'rotateInDownRight'  !default;
+
+
+//Rotate     Exit
+$name-rotateOut          :          'rotateOut'          !default;
+$name-rotateOutUpLeft    :          'rotateOutUpLeft'    !default;
+$name-rotateOutUpRight   :          'rotateOutUpRight'   !default;
+$name-rotateOutDownLeft  :          'rotateOutDownLeft'  !default;
+$name-rotateOutDownRight :          'rotateOutDownRight' !default;
+
+
+//Slide      Enter
+$name-slideInUp          :          'slideInUp'          !default;
+$name-slideInDown        :          'slideInDown'        !default;
+$name-slideInLeft        :          'slideInLeft'        !default;
+$name-slideInRight       :          'slideInRight'       !default;
+
+
+//Slide      Exit
+$name-slideOutUp         :          'slideOutUp'         !default;
+$name-slideOutDown       :          'slideOutDown'       !default;
+$name-slideOutLeft       :          'slideOutLeft'       !default;
+$name-slideOutRight      :          'slideOutRight'      !default;
+
+
+//Flippers
+$name-flip               :          'flip'               !default;
+$name-flipInX            :          'flipInX'            !default;
+$name-flipInY            :          'flipInY'            !default;
+$name-flipOutX           :          'flipOutX'           !default;
+$name-flipOutY           :          'flipOutY'           !default;
+
+
+//Lightspeed
+$name-lightSpeedIn       :          'lightSpeedIn'       !default;
+$name-lightSpeedOut      :          'lightSpeedOut'      !default;
+
+
+//Attention  Seekers
+$name-bounce             :          'bounce'             !default;
+$name-flash              :          'flash'              !default;
+$name-pulse              :          'pulse'              !default;
+$name-swing              :          'swing'              !default;
+$name-shake              :          'shake'              !default;
+$name-tada               :          'tada'               !default;
+$name-wobble             :          'wobble'             !default;
+$name-jello              :          'jello'              !default;
+
+
+//Special
+$name-hinge              :          'hinge'              !default;
+$name-rollIn             :          'rollIn'             !default;
+$name-rollOut            :          'rollOut'            !default;
+
+
+//Zoom       In
+$name-zoomIn             :          "zoomIn"             !default;
+$name-zoomInDown         :          'zoomInDown'         !default;
+$name-zoomInLeft         :          'zoomInLeft'         !default;
+$name-zoomInRight        :          'zoomInRight'        !default;
+$name-zoomInUp           :          'zoomInUp'           !default;
+
+
+//Zoom       Out
+$name-zoomOut            :          'zoomOut'            !default;
+$name-zoomOutDown        :          'zoomOutDown'        !default;
+$name-zoomOutLeft        :          'zoomOutLeft'        !default;
+$name-zoomOutRight       :          'zoomOutRight'       !default;
+$name-zoomOutUp          :          'zoomOutUp'          !default;
+
