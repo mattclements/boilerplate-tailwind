@@ -78,7 +78,7 @@
         "gulp-svgmin": "^1.2.3",
         "gulp-todo": "^5.2.0",
         "gulp-uglify": "^3.0.0",
-        "gulp-util": "^3.0.7",
+        "gulp-util": "^3.0.8",
         "moment": "^2.20.0",
         "postcss-sorting": "^3.1.0",
         "stylelint": "^8.4.0",
