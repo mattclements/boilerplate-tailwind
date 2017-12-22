@@ -1,274 +1,302 @@
-const
-	// package vars
-	pkg = require("./package.json");
+const // package vars
+pkg = require("./package.json");
 
-	//Define Gulp
-	gulp = require("gulp");
+//Define Gulp
+gulp = require("gulp");
 
-	// load all plugins in "devDependencies" into the variable $
-	$ = require("gulp-load-plugins")({
-		pattern: ["*"],
-		scope: ["devDependencies"],
-		camelize: true,
-	});
+// load all plugins in "devDependencies" into the variable $
+$ = require("gulp-load-plugins")({
+  pattern: ["*"],
+  scope: ["devDependencies"],
+  camelize: true
+});
 
-const banner = [
-	"/**",
-	" * @project             <%= pkg.name %>",
-	" * @description         <%= pkg.description %>",
-	" * @url                 <%= pkg.urls.live %>",
-	" * @build               " + $.moment().format("llll") + " ET",
-	" * @author              <%= pkg.author %>",
-	" * @contact             <%= pkg.contact %>",
-	" * @copyright           Copyright (c) " + $.moment().format("YYYY") + ", <%= pkg.copyright %>",
-	" *",
-	" */",
-	""
+banner = [
+  "/**",
+  " * @project             <%= pkg.name %>",
+  " * @description         <%= pkg.description %>",
+  " * @url                 <%= pkg.urls.live %>",
+  " * @build               " + $.moment().format("llll") + " ET",
+  " * @author              <%= pkg.author %>",
+  " * @contact             <%= pkg.contact %>",
+  " * @copyright           Copyright (c) " +
+    $.moment().format("YYYY") +
+    ", <%= pkg.copyright %>",
+  " *",
+  " */",
+  ""
 ].join("\n");
 
-
-const	onError = function (err) {
-		$.util.beep('*-*');
-		$.util.log($.util.colors.red(err));
-		this.emit('end');
-		this.destroy();
-	};
-
-/* ==========================================================================
-	STYLES
-========================================================================== */
-gulp.task('styles', function() {
-	const processes = [
-		$.tailwindcss('tailwind.js'),
-		$.autoprefixer(pkg.autoprefixer),
-		$.postcssSorting({
-			"properties-order": "alphabetical",
-		})
-
-	];
-
-	return gulp
-		.src(pkg.paths.src.sass+'/**/*.scss')
-		//Any Errors
-		.pipe($.plumber({
-			errorHandler: onError
-		}))
-
-		// .pipe(sourcemaps.init({loadMaps: true}))
-		.pipe($.sass())
-		.pipe($.notify({
-			message: "<%= file.relative %> Compiled"
-		}))
-
-		.pipe($.postcss(processes))
-		.pipe($.notify({
-			message: "<%= file.relative %> POST CSS"
-		}))
-
-		.pipe($.header(banner, {pkg: pkg}))
-		.pipe(gulp.dest(pkg.paths.dist.css))
-		.pipe($.postcss(
-			[$.cssnano({preset: 'advanced'})]
-		))
-		 .pipe($.rename({
-			suffix: '.min'
-		}))
-		.pipe($.notify({
-			message: "<%= file.relative %> Minified"
-		}))
-		// .pipe(sourcemaps.write('./'))
-		.pipe($.size({gzip: false, showFiles: true, }))
-		.pipe($.size({gzip: true, showFiles: true, }))
-
-		.pipe(gulp.dest(pkg.paths.dist.css))
-
-		//Now Pipe into the Live Project
-		.pipe($.browserSync.stream());
-});
-
+onError = function(err) {
+  $.util.beep("*-*");
+  $.util.log($.util.colors.red(err));
+  this.emit("end");
+  this.destroy();
+};
 
 /* ==========================================================================
-	COPY DEPENDENCIES
+  STYLES
 ========================================================================== */
-gulp.task('copy', function() {
+gulp.task("styles", function() {
+  const processes = [
+    $.tailwindcss("tailwind.js"),
+    $.autoprefixer(pkg.autoprefixer),
+    $.postcssSorting({
+      "properties-order": "alphabetical"
+    })
+  ];
 
-		// Copy any JS dependencies from node_modeules to our pkg.paths.src.js folder
-		gulp.src(pkg.vendors.js)
-		.pipe($.changed(pkg.paths.src.js))
-		.pipe(gulp.dest(pkg.paths.src.js))
-		.pipe($.notify({
-			message: "<%= file.relative %> Copied"
-		}))
-		.pipe($.size({gzip: false, showFiles: true, }))
+  return (gulp
+      .src(pkg.paths.src.sass + "/**/*.scss")
 
+      //Any Errors
+      .pipe(
+        $.plumber({
+          errorHandler: onError
+        })
+      )
 
+      // .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe($.sass())
+      .pipe(
+        $.notify({
+          message: "<%= file.relative %> Compiled"
+        })
+      )
+
+      .pipe($.postcss(processes))
+      .pipe(
+        $.notify({
+          message: "<%= file.relative %> POST CSS"
+        })
+      )
+
+      .pipe($.header(banner, { pkg: pkg }))
+      .pipe(gulp.dest(pkg.paths.dist.css))
+      .pipe($.postcss([$.cssnano({ preset: "advanced" })]))
+      .pipe(
+        $.rename({
+          suffix: ".min"
+        })
+      )
+      .pipe(
+        $.notify({
+          message: "<%= file.relative %> Minified"
+        })
+      )
+      // .pipe(sourcemaps.write('./'))
+      .pipe($.size({ gzip: false, showFiles: true }))
+      .pipe($.size({ gzip: true, showFiles: true }))
+
+      .pipe(gulp.dest(pkg.paths.dist.css))
+
+      //Now Pipe into the Live Project
+      .pipe($.browserSync.stream()) );
 });
 
 /* ==========================================================================
-	SCRIPTS
+  COPY DEPENDENCIES
 ========================================================================== */
-gulp.task('scripts', ["copy"], function() {
-		// Concatenate and Minify the main production file
-		gulp.src(pkg.paths.src.js+'production.mix.js')
-
-		// //Any Errors
-		.pipe($.plumber({
-			errorHandler: onError
-		}))
-
-		.pipe($.header(banner, {pkg: pkg}))
-		.pipe($.include())
-		.pipe($.rename('production.js'))
-		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe($.notify({
-			message: "JS Concatenated - <%= file.relative %>"
-		}))
-		.pipe($.uglify())
-		.pipe($.rename('production.min.js'))
-		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe($.notify({
-			message: "JS Minified - <%= file.relative %>"
-		}))
-
-		.pipe($.size({gzip: false, showFiles: true, }))
-		.pipe($.size({gzip: true, showFiles: true, }))
-
-		//Minify ALL JS Files
-		gulp.src([pkg.paths.src.js+'/**/*.js', '!'+pkg.paths.src.js+'production.*'])
-
-		.pipe($.changed(pkg.paths.dist.js, {extension: '.min.js'}))
-
-		// //Any Errors
-		.pipe($.plumber({
-			errorHandler: onError
-		}))
-
-		.pipe($.uglify())
-		.pipe($.rename({
-			suffix: '.min'
-		}))
-
-		.pipe(gulp.dest(pkg.paths.dist.js))
-		.pipe($.notify({
-			message: "JS Minified - <%= file.relative %>"
-		}))
-
-		.pipe($.size({gzip: false, showFiles: true, }))
-		.pipe($.size({gzip: true, showFiles: true, }))
-
-		.pipe($.browserSync.stream())
+gulp.task("copy", function() {
+  // Copy any JS dependencies from node_modeules to our pkg.paths.src.js folder
+  gulp
+    .src(pkg.vendors.js)
+    .pipe($.changed(pkg.paths.src.js))
+    .pipe(gulp.dest(pkg.paths.src.js))
+    .pipe(
+      $.notify({
+        message: "<%= file.relative %> Copied"
+      })
+    )
+    .pipe($.size({ gzip: false, showFiles: true }));
 });
 
+/* ==========================================================================
+  SCRIPTS
+========================================================================== */
+gulp.task("scripts", ["copy"], function() {
+  // Concatenate and Minify the main production file
+  gulp
+    .src(pkg.paths.src.js + "production.mix.js")
+
+    // //Any Errors
+    .pipe(
+      $.plumber({
+        errorHandler: onError
+      })
+    )
+
+    .pipe($.header(banner, { pkg: pkg }))
+    .pipe($.include())
+    .pipe($.rename("production.js"))
+    .pipe(gulp.dest(pkg.paths.dist.js))
+    .pipe(
+      $.notify({
+        message: "JS Concatenated - <%= file.relative %>"
+      })
+    )
+    .pipe($.uglify())
+    .pipe($.rename("production.min.js"))
+    .pipe(gulp.dest(pkg.paths.dist.js))
+    .pipe(
+      $.notify({
+        message: "JS Minified - <%= file.relative %>"
+      })
+    )
+
+    .pipe($.size({ gzip: false, showFiles: true }))
+    .pipe($.size({ gzip: true, showFiles: true }));
+
+  //Minify ALL JS Files
+  gulp
+    .src([
+      pkg.paths.src.js + "/**/*.js",
+      "!" + pkg.paths.src.js + "production.*"
+    ])
+
+    .pipe($.changed(pkg.paths.dist.js, { extension: ".min.js" }))
+
+    // //Any Errors
+    .pipe(
+      $.plumber({
+        errorHandler: onError
+      })
+    )
+
+    .pipe($.uglify())
+    .pipe(
+      $.rename({
+        suffix: ".min"
+      })
+    )
+
+    .pipe(gulp.dest(pkg.paths.dist.js))
+    .pipe(
+      $.notify({
+        message: "JS Minified - <%= file.relative %>"
+      })
+    )
+
+    .pipe($.size({ gzip: false, showFiles: true }))
+    .pipe($.size({ gzip: true, showFiles: true }))
+
+    .pipe($.browserSync.stream());
+});
 
 /* ==========================================================================
-	IMAGES
+  IMAGES
 ========================================================================== */
 // gulp.task('images', function() {
-// 	// gulp.src(pkg.paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
-// 	// .pipe(imageOptim.optimize())
+//  // gulp.src(pkg.paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
+//  // .pipe(imageOptim.optimize())
 
-// 	gulp.src(pkg.paths.src.img+'/*.svg')
-// 	.pipe(changed(pkg.paths.dist.img))
-// 	.pipe(svgmin())
-// 	.pipe(notify({
-// 		message: "<%= file.relative %> Optimised"
-// 	}))
+//  gulp.src(pkg.paths.src.img+'/*.svg')
+//  .pipe(changed(pkg.paths.dist.img))
+//  .pipe(svgmin())
+//  .pipe(notify({
+//    message: "<%= file.relative %> Optimised"
+//  }))
 
-// 	.pipe(gulp.dest(pkg.paths.dist.img))
+//  .pipe(gulp.dest(pkg.paths.dist.img))
 // });
 
-
 /* ==========================================================================
-	SVG IMAGES
+  SVG IMAGES
 ========================================================================== */
-gulp.task('svg', function() {
+gulp.task("svg", function() {
+  // const s = $.size();
 
-	// const s = $.size();
+  gulp
+    .src(pkg.paths.src.svg + "/*.svg")
+    .pipe($.changed(pkg.paths.dist.svg))
+    .pipe($.svgmin())
+    .pipe(
+      $.notify({
+        message: "<%= file.relative %> Optimised"
+      })
+    )
+    .pipe($.size({ gzip: false, showFiles: false }))
+    .pipe($.size({ gzip: true, showFiles: false }))
 
-	gulp.src(pkg.paths.src.svg+'/*.svg')
-	.pipe($.changed(pkg.paths.dist.svg))
-	.pipe($.svgmin())
-	.pipe($.notify({
-		message: '<%= file.relative %> Optimised'
-	}))
-	.pipe($.size({gzip: false, showFiles: false, }))
-	.pipe($.size({gzip: true, showFiles: false, }))
+    // .pipe($.notify({
+    //  onLast: true,
+    //  message: () => `Total Size of all SVGs : ${s.prettySize}`,
+    // }))
 
-
-	// .pipe($.notify({
-	// 	onLast: true,
-	// 	message: () => `Total Size of all SVGs : ${s.prettySize}`,
-	// }))
-
-	.pipe(gulp.dest(pkg.paths.dist.svg))
+    .pipe(gulp.dest(pkg.paths.dist.svg));
 });
 
 /* ==========================================================================
-	WATCH
+  WATCH
 ========================================================================== */
-gulp.task('watch', function() {
-	gulp.watch(pkg.paths.src.sass+'/**/*', ['styles'])
-	gulp.watch(pkg.paths.src.js+'/**/*', ['scripts'], $.browserSync.reload);
-	gulp.watch(pkg.paths.src.svg+'/**/*', ['svg']).on('change', $.browserSync.reload);
-	// gulp.watch(pkg.paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
+gulp.task("watch", function() {
+  gulp.watch(pkg.paths.src.sass + "/**/*", ["styles"]);
+  gulp.watch(pkg.paths.src.js + "/**/*", ["scripts"], $.browserSync.reload);
+  gulp
+    .watch(pkg.paths.src.svg + "/**/*", ["svg"])
+    .on("change", $.browserSync.reload);
+  // gulp.watch(pkg.paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
 
-	gulp.watch([
-			'**/*.+(php|html)'
-			// 'craft/templates/**/*.+(php|html|twig)',
-		]).on('change', $.browserSync.reload);
+  gulp
+    .watch([
+      "**/*.+(php|html)"
+      // 'craft/templates/**/*.+(php|html|twig)',
+    ])
+    .on("change", $.browserSync.reload);
 });
 
 /* ==========================================================================
-	BROWSERSYNC
+  BROWSERSYNC
 ========================================================================== */
-gulp.task('browserSync', function() {
-	// Create a new static server
-	$.browserSync.init({
-		proxy: pkg.urls.local,
-		port: 8080,
-		notify: false,
-		online: true,
-		ghostMode: { location: true }
-	});
+gulp.task("browserSync", function() {
+  // Create a new static server
+  $.browserSync.init({
+    proxy: pkg.urls.local,
+    port: 8080,
+    notify: false,
+    online: true,
+    ghostMode: { location: true }
+  });
 });
 
-
 /* ==========================================================================
-	COMPILE TODO LIST TASKS
+  COMPILE TODO LIST TASKS
 ========================================================================== */
-gulp.task('todo', function() {
-	return gulp
-		.src([
-			pkg.paths.src.js+'/functions.js',
-			pkg.paths.src.sass+'/**/*.scss',
-			'!cms/core/**/*',
-			'!cms/addons/**/*',
-			'!vendor/**/*',
-			'**/*.+(php|html)'
-		])
+gulp.task("todo", function() {
+  return (gulp
+      .src([
+        pkg.paths.src.js + "/functions.js",
+        pkg.paths.src.sass + "/**/*.scss",
+        "!cms/core/**/*",
+        "!cms/addons/**/*",
+        "!vendor/**/*",
+        "**/*.+(php|html)"
+      ])
 
-		.pipe($.todo({
-			withInlineFiles: true}
-		))
+      .pipe(
+        $.todo({
+          withInlineFiles: true
+        })
+      )
 
-		 //output todo.md as markdown
-		.pipe(gulp.dest('./'))
-		.pipe(todo.reporter('json', {
-			fileName: 'TODO.json',
-			withInlineFiles: true
-		}))
+      //output todo.md as markdown
+      .pipe(gulp.dest("./"))
+      .pipe(
+        todo.reporter("json", {
+          fileName: "TODO.json",
+          withInlineFiles: true
+        })
+      )
 
-		 //output todo.json as json
-		.pipe(gulp.dest('./'))
+      //output todo.json as json
+      .pipe(gulp.dest("./")) );
 });
 
-
 /* ==========================================================================
-	GULP TASKS
+  GULP TASKS
 ========================================================================== */
-gulp.task('default', ['styles', 'scripts', 'svg', 'browserSync', 'watch']);
-gulp.task('compile', ['styles', 'scripts']);
-
+gulp.task("default", ["styles", "scripts", "svg", "browserSync", "watch"]);
+gulp.task("compile", ["styles", "scripts"]);
 
 //TODO: IMAGE OPTIM
 //TODO: Delete build file if src file is removed
@@ -289,4 +317,3 @@ gulp.task('compile', ['styles', 'scripts']);
 
 // Consider using Gulp Cache?
 // Consider adding in full project size - https://www.npmjs.com/package/gulp-size
-
