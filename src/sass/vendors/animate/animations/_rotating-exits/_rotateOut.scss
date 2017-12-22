@@ -18,6 +18,7 @@ $class-name: namespace($name-rotateOut);
       @include transform-origin(center center);
       opacity: 1;
     }
+
     100% {
       @include transform(rotate(200deg));
       @include transform-origin(center center);

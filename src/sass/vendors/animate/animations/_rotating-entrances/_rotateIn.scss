@@ -18,6 +18,7 @@ $class-name: namespace($name-rotateIn);
       @include transform-origin(center center);
       opacity: 0;
     }
+
     100% {
       @include transform(rotate(0));
       @include transform-origin(center center);

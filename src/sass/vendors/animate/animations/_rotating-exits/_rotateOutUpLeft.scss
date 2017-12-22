@@ -18,10 +18,11 @@ $class-name: namespace($name-rotateOutUpLeft);
       @include transform-origin(left bottom);
       opacity: 1;
     }
-   100% {
-     @include transform(rotate(-90deg));
-     @include transform-origin(left bottom);
-     opacity: 0;
+
+    100% {
+      @include transform(rotate(-90deg));
+      @include transform-origin(left bottom);
+      opacity: 0;
     }
   }
 

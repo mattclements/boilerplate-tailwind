@@ -17,6 +17,7 @@ $class-name: namespace($name-slideInUp);
       @include transform(translateY(2000px));
       opacity: 0;
     }
+
     100% {
       @include transform(translateY(0));
     }

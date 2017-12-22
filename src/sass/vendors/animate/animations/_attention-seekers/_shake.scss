@@ -2,25 +2,39 @@ $keyframe-name: $name-shake;
 $class-name: namespace($name-shake);
 
 @mixin shake($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
-
 
 @if useModule($use-shake) {
-    @include keyframes($keyframe-name) {
-        0%, 100% {@include transform(translateX(0));}
-        10%, 30%, 50%, 70%, 90% {@include transform(translateX(-10px));}
-        20%, 40%, 60%, 80% {@include transform(translateX(10px));}
+  @include keyframes($keyframe-name) {
+    0%,
+    100% {
+      @include transform(translateX(0));
     }
 
-    .#{$class-name} {
-        @include shake();
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      @include transform(translateX(-10px));
     }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      @include transform(translateX(10px));
+    }
+  }
+
+  .#{$class-name} {
+    @include shake();
+  }
 }
-

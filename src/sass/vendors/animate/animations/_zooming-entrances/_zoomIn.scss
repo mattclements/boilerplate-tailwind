@@ -14,9 +14,10 @@ $class-name: namespace($name-zoomIn);
 @if useModule($use-zoomIn) {
   @include keyframes($keyframe-name) {
     0% {
-      @include transform(scale3d(.3, .3, .3));
+      @include transform(scale3d(0.3, 0.3, 0.3));
       opacity: 0;
     }
+
     50% {
       opacity: 1;
     }

@@ -17,12 +17,15 @@ $class-name: namespace($name-flipInX);
       @include transform(perspective(400px) rotateX(90deg));
       opacity: 0;
     }
+
     40% {
       @include transform(perspective(400px) rotateX(-10deg));
     }
+
     70% {
       @include transform(perspective(400px) rotateX(10deg));
     }
+
     100% {
       @include transform(perspective(400px) rotateX(0deg));
       opacity: 1;

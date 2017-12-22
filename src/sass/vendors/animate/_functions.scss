@@ -4,16 +4,18 @@
 //
 
 // Create a namespaced class name
+
 @function namespace($name) {
-    @return $name-prefix + $name;
+  @return $name-prefix + $name;
 }
 
 
 // Check for enabled animation modules
-@function useModule($module, $all: $use-all-modules) {
-    @if ($all == true or $module == true) {
-        @return true;
-    }
 
-    @return false;
+@function useModule($module, $all: $use-all-modules) {
+  @if ($all == true or $module == true) {
+    @return true;
+  }
+
+  @return false;
 }

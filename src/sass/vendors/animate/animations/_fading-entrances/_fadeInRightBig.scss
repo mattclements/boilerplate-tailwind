@@ -2,30 +2,30 @@ $keyframe-name: $name-fadeInRightBig;
 $class-name: namespace($name-fadeInRightBig);
 
 @mixin fadeInRightBig($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
-
 
 @if useModule($use-fadeInRightBig) {
   @include keyframes($keyframe-name) {
     0% {
-         @include transform(translateX(2000px));
-        opacity: 0;
+      @include transform(translateX(2000px));
+      opacity: 0;
     }
+
     100% {
-        @include transform(translateX(0));
-        opacity: 1;
+      @include transform(translateX(0));
+      opacity: 1;
     }
   }
 
-    .#{$class-name} {
-        @include fadeInRightBig();
-    }
+  .#{$class-name} {
+    @include fadeInRightBig();
+  }
 }
 

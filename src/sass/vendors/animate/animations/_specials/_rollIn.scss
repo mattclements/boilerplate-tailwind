@@ -17,8 +17,9 @@ $class-name: namespace($name-rollIn);
       @include transform(translateX(-100%) rotate(-120deg));
       opacity: 0;
     }
+
     100% {
-      @include transform(translateX(0px) rotate(0deg));
+      @include transform(translateX(00 rotate(0deg));
       opacity: 1;
     }
   }

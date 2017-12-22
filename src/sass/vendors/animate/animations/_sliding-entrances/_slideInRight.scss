@@ -17,6 +17,7 @@ $class-name: namespace($name-slideInRight);
       @include transform(translateX(2000px));
       opacity: 0;
     }
+
     100% {
       @include transform(translateX(0));
     }

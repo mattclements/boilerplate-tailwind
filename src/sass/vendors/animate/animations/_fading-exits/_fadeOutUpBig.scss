@@ -13,7 +13,6 @@ $class-name: namespace($name-fadeOutUpBig);
 
 @if useModule($use-fadeOutUpBig) {
   @include keyframes($keyframe-name) {
-
     0% {
       @include transform(translateY(0));
       opacity: 1;

@@ -2,32 +2,33 @@ $keyframe-name: $name-bounceOutDown;
 $class-name: namespace($name-bounceOutDown);
 
 @mixin bounceOutDown($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
 
-
 @if useModule($use-bounceOutDown) {
-    @include keyframes($keyframe-name) {
+  @include keyframes($keyframe-name) {
     0% {
-        @include transform(translateY(0));
+      @include transform(translateY(0));
     }
+
     20% {
-        @include transform(translateY(-20px));
-        opacity: 1;
+      @include transform(translateY(-20px));
+      opacity: 1;
     }
+
     100% {
-        @include transform(translateY(2000px));
-        opacity: 0;
+      @include transform(translateY(2000px));
+      opacity: 0;
     }
   }
 
-    .#{$class-name} {
-        @include bounceOutDown();
-    }
+  .#{$class-name} {
+    @include bounceOutDown();
+  }
 }

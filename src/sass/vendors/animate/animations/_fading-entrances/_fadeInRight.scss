@@ -2,30 +2,30 @@ $keyframe-name: $name-fadeInRight;
 $class-name: namespace($name-fadeInRight);
 
 @mixin fadeInRight($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
-
 
 @if useModule($use-fadeInRight) {
   @include keyframes($keyframe-name) {
     0% {
-         @include transform(translateX(20px));
-         opacity: 0;
+      @include transform(translateX(20px));
+      opacity: 0;
     }
+
     100% {
-         @include transform(translateX(0));
-        opacity: 1;
+      @include transform(translateX(0));
+      opacity: 1;
     }
   }
 
-    .#{$class-name} {
-        @include fadeInRight();
-    }
+  .#{$class-name} {
+    @include fadeInRight();
+  }
 }
 

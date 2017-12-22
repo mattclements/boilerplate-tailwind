@@ -2,29 +2,30 @@ $keyframe-name: $name-fadeOutLeft;
 $class-name: namespace($name-fadeOutLeft);
 
 @mixin fadeOutLeft($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
 
 
 @if useModule($use-fadeOutLeft) {
-    @include keyframes($keyframe-name) {
-        0% {
-            @include transform(translateX(0));
-            opacity: 1;
-        }
-        100% {
-             @include transform(translateX(-20px));
-            opacity: 0;
-        }
+  @include keyframes($keyframe-name) {
+    0% {
+      @include transform(translateX(0));
+      opacity: 1;
     }
 
-    .#{$class-name} {
-        @include fadeOutLeft();
+    100% {
+      @include transform(translateX(-20px));
+      opacity: 0;
     }
+  }
+
+  .#{$class-name} {
+    @include fadeOutLeft();
+  }
 }

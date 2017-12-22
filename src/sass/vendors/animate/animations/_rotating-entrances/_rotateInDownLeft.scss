@@ -18,6 +18,7 @@ $class-name: namespace($name-rotateInDownLeft);
       @include transform-origin(left bottom);
       opacity: 0;
     }
+
     100% {
       @include transform(rotate(0));
       @include transform-origin(left bottom);

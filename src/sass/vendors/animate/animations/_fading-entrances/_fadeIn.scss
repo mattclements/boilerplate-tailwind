@@ -2,24 +2,27 @@ $keyframe-name: $name-fadeIn;
 $class-name: namespace($name-fadeIn);
 
 @mixin fadeIn($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
-
 
 @if useModule($use-fadeIn) {
   @include keyframes($keyframe-name) {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 
-    .#{$class-name} {
-        @include fadeIn();
-    }
+  .#{$class-name} {
+    @include fadeIn();
+  }
 }
-

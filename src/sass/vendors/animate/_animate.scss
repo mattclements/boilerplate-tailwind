@@ -10,50 +10,32 @@
 
 
 // Grab the settings
-@import 'settings/_modules',
-        'settings/_names',
-        'settings/_properties';
+@import
+  "settings/_modules",
+  "settings/_names",
+  "settings/_properties";
 
 
 // Import Functions
-@import '_functions';
-
-
-// // Import animation modules
-// @import 'animations/attention-seekers/all',
-//         'animations/bouncing-entrances/all',
-//         'animations/bouncing-exits/all',
-//         'animations/fading-entrances/all',
-//         'animations/fading-exits/all',
-//         'animations/flippers/all',
-//         'animations/lightspeed/all',
-//         'animations/rotating-entrances/all',
-//         'animations/rotating-exits/all',
-//         'animations/special/all',
-//         'animations/zooming-entrances/all',
-//         'animations/zooming-exits/all';
-
+@import "_functions";
 
 // // Import base animation classes
 // @import 'utilities/base-classes';
 
-
-
-
 // Import the animations
 @import
-    "animations/_attention-seekers/_attention-seekers",
-    "animations/_bouncing-entrances/_bouncing-entrances",
-    "animations/_bouncing-exits/_bouncing-exits",
-    "animations/_fading-entrances/_fading-entrances",
-    "animations/_fading-exits/_fading-exits",
-    "animations/_flippers/_flippers",
-    "animations/_lightspeed/_lightspeed",
-    "animations/_rotating-entrances/_rotating-entrances",
-    "animations/_rotating-exits/_rotating-exits",
-    "animations/_sliding-entrances/_sliding-entrances",
-    "animations/_sliding-exits/_sliding-exits",
-    "animations/_specials/_specials",
-    "animations/_zooming-entrances/_zooming-entrances",
-    "animations/_zooming-exits/_zooming-exits"
+  "animations/_attention-seekers/_attention-seekers",
+  "animations/_bouncing-entrances/_bouncing-entrances",
+  "animations/_bouncing-exits/_bouncing-exits",
+  "animations/_fading-entrances/_fading-entrances",
+  "animations/_fading-exits/_fading-exits",
+  "animations/_flippers/_flippers",
+  "animations/_lightspeed/_lightspeed",
+  "animations/_rotating-entrances/_rotating-entrances",
+  "animations/_rotating-exits/_rotating-exits",
+  "animations/_sliding-entrances/_sliding-entrances",
+  "animations/_sliding-exits/_sliding-exits",
+  "animations/_specials/_specials",
+  "animations/_zooming-entrances/_zooming-entrances",
+  "animations/_zooming-exits/_zooming-exits"
 ;

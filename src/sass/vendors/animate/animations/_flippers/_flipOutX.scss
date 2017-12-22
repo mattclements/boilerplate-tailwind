@@ -17,6 +17,7 @@ $class-name: namespace($name-flipOutX);
       @include transform(perspective(400px) rotateX(0deg));
       opacity: 1;
     }
+
     100% {
       @include transform(perspective(400px) rotateX(90deg));
       opacity: 0;

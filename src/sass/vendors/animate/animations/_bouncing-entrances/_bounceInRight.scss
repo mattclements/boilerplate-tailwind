@@ -2,35 +2,37 @@ $keyframe-name: $name-bounceInRight;
 $class-name: namespace($name-bounceInRight);
 
 @mixin bounceInRight($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
-    @include animation-name($keyframe-name);
-    @include count($count);
-    @include duration($duration);
-    @include delay($delay);
-    @include function($function);
-    @include fill-mode($fill);
-    @include visibility($visibility);
+  @include animation-name($keyframe-name);
+  @include count($count);
+  @include duration($duration);
+  @include delay($delay);
+  @include function($function);
+  @include fill-mode($fill);
+  @include visibility($visibility);
 }
-
 
 @if useModule($use-bounceInRight) {
   @include keyframes($keyframe-name) {
     0% {
-         @include transform(translateX(2000px));
-         opacity: 0;
+      @include transform(translateX(2000px));
+      opacity: 0;
     }
+
     60% {
-         @include transform(translateX(-30px));
-         opacity: 1;
+      @include transform(translateX(-30px));
+      opacity: 1;
     }
+
     80% {
-         @include transform(translateX(10px));
+      @include transform(translateX(10px));
     }
+
     100% {
-         @include transform(translateX(0));
+      @include transform(translateX(0));
     }
   }
 
-    .#{$class-name} {
-        @include bounceInRight();
-    }
+  .#{$class-name} {
+    @include bounceInRight();
+  }
 }
