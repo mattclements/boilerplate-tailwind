@@ -97,7 +97,8 @@ gulp.task("styles", function() {
 /* ==========================================================================
   COPY DEPENDENCIES
 ========================================================================== */
-gulp.task("copy", function() {
+
+gulp.task("copyJs", function() {
   // Copy any JS dependencies from node_modeules to our pkg.paths.src.js folder
   gulp
     .src(pkg.vendors.js)
@@ -109,19 +110,51 @@ gulp.task("copy", function() {
       })
     )
     .pipe($.size({ gzip: false, showFiles: true }));
+});
 
-    // Copy any Sass dependencies from node_modeules to our pkg.paths.src.sass folder
+// Process data in an array synchronously, moving onto the n+1 item only after the nth item callback
+function doSynchronousLoop(data, processData, done) {
+  if (data.length > 0) {
+    const loop = (data, i, processData, done) => {
+      processData(data[i], i, () => {
+        if (++i < data.length) {
+          loop(data, i, processData, done);
+        } else {
+          done();
+        }
+      });
+    };
+    loop(data, 0, processData, done);
+  } else {
+    done();
+  }
+}
+
+// Process the Sass dependencies one at a time
+function processSass(element, i, callback) {
+  const package = element.package;
+  const packageName = element.name;
+
   gulp
-    .src(pkg.vendors.sass)
-    .pipe($.changed(pkg.paths.src.sass + "/vendors"))
-    .pipe(gulp.dest(pkg.paths.src.sass + "/vendors"))
+    .src(package)
+    .pipe(gulp.dest(pkg.paths.src.sass + "/vendors/" + packageName))
     .pipe(
       $.notify({
         message: "<%= file.relative %> Copied"
       })
     )
-    .pipe($.size({ gzip: false, showFiles: true }));
+
+  callback();
+}
+
+// download task
+gulp.task("copySass", callback => {
+  doSynchronousLoop(pkg.vendors.sass, processSass, () => {
+    // all done
+    callback();
+  });
 });
+
 
 /* ==========================================================================
   SCRIPTS
@@ -276,32 +309,32 @@ gulp.task("browserSync", function() {
 ========================================================================== */
 gulp.task("todo", function() {
   gulp
-      .src([
-        pkg.paths.src.js + "/functions.js",
-        pkg.paths.src.sass + "/**/*.scss",
-        "!cms/core/**/*",
-        "!cms/addons/**/*",
-        "!vendor/**/*",
-        "**/*.+(php|html)"
-      ])
+    .src([
+      pkg.paths.src.js + "/functions.js",
+      pkg.paths.src.sass + "/**/*.scss",
+      "!cms/core/**/*",
+      "!cms/addons/**/*",
+      "!vendor/**/*",
+      "**/*.+(php|html)"
+    ])
 
-      .pipe(
-        $.todo({
-          withInlineFiles: true
-        })
-      )
+    .pipe(
+      $.todo({
+        withInlineFiles: true
+      })
+    )
 
-      //output todo.md as markdown
-      .pipe(gulp.dest("./"))
-      .pipe(
-        todo.reporter("json", {
-          fileName: "TODO.json",
-          withInlineFiles: true
-        })
-      )
+    //output todo.md as markdown
+    .pipe(gulp.dest("./"))
+    .pipe(
+      todo.reporter("json", {
+        fileName: "TODO.json",
+        withInlineFiles: true
+      })
+    )
 
-      //output todo.json as json
-      .pipe(gulp.dest("./"));
+    //output todo.json as json
+    .pipe(gulp.dest("./"));
 });
 
 /* ==========================================================================

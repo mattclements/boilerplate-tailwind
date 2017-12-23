@@ -42,7 +42,14 @@
             "./node_modules/jquery/dist/jquery.js"
         ],
         "sass": [
-            "./node_modules/hamburgers/_sass/**/*"
+            {
+              "package": "./node_modules/hamburgers/_sass/hamburgers/**/*",
+              "name": "hamburgers"
+            },
+             {
+              "package": "./node_modules/hover.css/scss/**/*",
+              "name": "hover"
+            }
         ]
     },
     "autoprefixer": {
@@ -57,6 +64,7 @@
     ],
     "dependencies": {
         "hamburgers": "^0.9.1",
+        "hover.css": "^2.2.1",
         "jquery": "^3.2.1",
         "lazysizes": "^2.0.6",
         "picturefill": "^3.0.2"
