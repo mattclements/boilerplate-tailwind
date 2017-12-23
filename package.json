@@ -41,8 +41,8 @@
             "./node_modules/picturefill/dist/picturefill.js",
             "./node_modules/jquery/dist/jquery.js"
         ],
-        "css": [
-            "./node_modules/lazysizes/lazysizes.js"
+        "sass": [
+            "./node_modules/hamburgers/_sass/**/*"
         ]
     },
     "autoprefixer": {
@@ -56,6 +56,7 @@
         "./templates/**/*.{html,twig}"
     ],
     "dependencies": {
+        "hamburgers": "^0.9.1",
         "jquery": "^3.2.1",
         "lazysizes": "^2.0.6",
         "picturefill": "^3.0.2"

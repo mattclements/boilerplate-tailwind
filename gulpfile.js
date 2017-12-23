@@ -109,12 +109,24 @@ gulp.task("copy", function() {
       })
     )
     .pipe($.size({ gzip: false, showFiles: true }));
+
+    // Copy any Sass dependencies from node_modeules to our pkg.paths.src.sass folder
+  gulp
+    .src(pkg.vendors.sass)
+    .pipe($.changed(pkg.paths.src.sass + "/vendors"))
+    .pipe(gulp.dest(pkg.paths.src.sass + "/vendors"))
+    .pipe(
+      $.notify({
+        message: "<%= file.relative %> Copied"
+      })
+    )
+    .pipe($.size({ gzip: false, showFiles: true }));
 });
 
 /* ==========================================================================
   SCRIPTS
 ========================================================================== */
-gulp.task("scripts", ["copy"], function() {
+gulp.task("scripts", function() {
   // Concatenate and Minify the main production file
   gulp
     .src(pkg.paths.src.js + "production.mix.js")
@@ -263,7 +275,7 @@ gulp.task("browserSync", function() {
   COMPILE TODO LIST TASKS
 ========================================================================== */
 gulp.task("todo", function() {
-  return (gulp
+  gulp
       .src([
         pkg.paths.src.js + "/functions.js",
         pkg.paths.src.sass + "/**/*.scss",
@@ -289,7 +301,7 @@ gulp.task("todo", function() {
       )
 
       //output todo.json as json
-      .pipe(gulp.dest("./")) );
+      .pipe(gulp.dest("./"));
 });
 
 /* ==========================================================================
