@@ -143,7 +143,6 @@ function processSass(element, i, callback) {
         message: "<%= file.relative %> Copied"
       })
     )
-
   callback();
 }
 

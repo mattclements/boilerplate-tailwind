@@ -46,7 +46,7 @@
               "package": "./node_modules/hamburgers/_sass/hamburgers/**/*",
               "name": "hamburgers"
             },
-             {
+            {
               "package": "./node_modules/hover.css/scss/**/*",
               "name": "hover"
             }
