@@ -78,6 +78,7 @@ label {
 ========================================================================== */
 
 .form {
+  h1 { font-weight:bold; }
 	input,
 	select,
 	textarea {
@@ -112,7 +113,7 @@ label {
 		background-color:transparent;
 		color:$color-base;
 		// @extend %btn;
-		@apply .terry;
+		// @apply .terry;
 	}
 
 	&__item {
@@ -194,9 +195,9 @@ label {
 .error {
 	@include font-size(13);
 	@include remit(margin, 4 0 $hsu 0);
-
+font-weight:bold;
 	// @include shake($delay:0.6s);
 	color: $color-error;
 	float: left;
-	font-weight:bold;
+
 }

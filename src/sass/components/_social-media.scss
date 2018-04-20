@@ -1,0 +1,26 @@
+/* ==========================================================================
+  SOCIAL ICON STYLES
+========================================================================== */
+
+$social-media:(
+  twitter    : #00aced,
+  facebook   : #3b5998,
+  google     : #dd4b39,
+  linkedin   : #007bb6,
+  youtube    : #bb0000,
+);
+
+
+@each $social-media, $color in $social-media {
+.text-social-#{$social-media} {
+  color:$color;
+ }
+
+.bg-social-#{$social-media} {
+  background-color:$color;
+ }
+
+.hover\:text-social-#{$social-media}:hover {
+  color:$color;
+ }
+}

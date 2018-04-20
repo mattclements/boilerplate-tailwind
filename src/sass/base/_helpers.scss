@@ -2,180 +2,32 @@
    HELPER STYLES
 ========================================================================== */
 
-// .island-top 			{@include remit(margin-top, 60, !important); }
-// .island-right 			{@include remit(margin-right, 60, !important);}
-// .island-bottom 			{@include remit(margin-bottom, 60, !important);}
-// .island-left 			{@include remit(margin-left, 60, !important);}
-// .island					{@include remit(margin, 60, !important);}
-
-// .margin-top 				{@include remit(margin-top, $bsu, !important);}
-// .margin-right 			{@include remit(margin-right, $bsu, !important);}
-// .margin-bottom 			{@include remit(margin-bottom, $bsu, !important);}
-// .margin-left 			{@include remit(margin-left, $bsu, !important);}
-
-// .half-margin-top 		{@include remit(margin-top, $hsu, !important);}
-// .half-margin-right 		{@include remit(margin-right, $hsu, !important);}
-// .half-margin-bottom 	{@include remit(margin-bottom, $hsu, !important);}
-// .half-margin-left 		{@include remit(margin-left, $bsu, !important);}
-
-
-// .flush-top 				{margin-top:0 !important;}
-// .flush-right 			{margin-right:0 !important;}
-// .flush-bottom 			{margin-bottom:0 !important;}
-// .flush-left 				{margin-left:0 !important;}
-// .flush 					{margin:0 !important;}
-
-.float-right			{float:right !important; }
-.float-left				{float:left !important; }
-
-// .text-left				{text-align:left; }
-// .text-center				{text-align:center;}
-// .text-right				{text-align:right; }
-
-%muted					{opacity:0.5;}
-
-%padding-container {
-	@include remit(padding, 0 $hsu);
-
-	@include mq($small) {
-		@include remit(padding, 0 $bsu);
-	}
-}
-
-%no-gutter, .no-gutter {
-	@include mq($small, flase, max) {
-		@include remit(margin-left, -$hsu);
-		@include remit(margin-right, -$hsu);
-	}
-
-	@include mq($small) {
-		@include mq($regular, false, max) {
-			@include remit(margin-left, -$bsu);
-			@include remit(margin-right, -$bsu);
-		}
-	}
-}
-
-%inline-block {
-	display: inline-block;
-
-	.lt-ie9 & {
-		zoom: 1;
-		*display: inline;
-		}
-}
-
-
-/* ==========================================================================
-   CLEARFIX  STYLES
-========================================================================== */
-/*
- * Micro clearfix, as per: css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
- * Extend the clearfix class with Sass to avoid the `%cf` class appearing over
- * and over in your markup.
- */
-
-%cf {
-	&:after{
-		content:"";
-		display:table;
-		clear:both;
-	}
-}
-
-.clear	{clear:both;}
-
-//==========================================================================
-// STYLING HELPERS
-//==========================================================================
-
-//$horizontal  $vertical  $blur  $spread  $color;
-%shadow {
-	box-shadow:0 0 4px 2px $grey;
-}
-
-//$horizontal  $vertical  $blur  $spread  $color;
-%inner-shadow {
-	box-shadow: inset 0 0 4px $grey;
-}
-
-//Makes Whole Box Rounded
-%round {
-	border-radius:10px;
-}
-
-// Border Radius To define each corner
-%border-radius {
-	border-radius: 10px 10px 10px 10px;
-	-moz-background-clip: padding;
-	background-clip: padding-box;
-}
-
-// Normalize (<button>)
-%btn-reset {
-	font: inherit;
-	color: inherit;
-	text-transform: none;
-	background-color: transparent;
-	border: 0;
-	margin: 0;
-	overflow: visible;
-}
-
-/* ==========================================================================
-	HIDE STYLES
-========================================================================== */
-
-.hidden {
-	display: none;
-}
-
-.alt {
-	@extend %visually-hidden;
-}
-
-//Image replacement (Replaces an image for text in HTML)
-%ir {
-	text-indent: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
 //Hide only visually, but have it available for screenreaders: h5bp.com/v
-%visually-hidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
+.alt {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 
 //Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p
-	.focusable {
-		&:active, &:focus {
-			clip: auto;
-			height: auto;
-			margin: 0;
-			overflow: visible;
-			position: static;
-			width: auto;
-		}
-	}
+  .focusable {
+    &:active, &:focus {
+      clip: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      position: static;
+      width: auto;
+    }
+  }
 }
 
 
-//==========================================================================
-// ARROW/TRIANGLE  STYLES
-//==========================================================================
 
-// See Triangles Mixin for arrows
-// Also see the forms.scss for an example in the %select-list
-
-
-// Add an arrow "»" before the text
-%arrow-before {
-	content: "\00bb";
-	@include remit(margin-right, 5);
+.last-child *:last-child {
+  margin-bottom:0;
 }

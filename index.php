@@ -87,7 +87,7 @@
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 
-	<header role="banner" class="lg:flex // items-center // justify-between // bg-teal // white // p-4">
+	<header role="banner" class="container // m-auto // lg:flex // items-center // justify-between // bg-teal // white // p-4">
 		<nav class="w3/4 // border-2">
 			<ul class="flex // flex-wrap // space-between // list-reset // font-serif">
 				<li><a href="#" class="text-white // no-underline // bg-teal-darkest // rounded // py-2 // px-4 // mr-4">Home</a></li>
@@ -106,8 +106,8 @@
 
 	</header>
 
-	<div class="container terry">
-		<p>Terry and Container</p>
+	<div class="container // m-auto // text-white // terry // animated // fadeInUp">
+		<p>Terry and Container and more text</p>
 		<!-- SVG Example -->
 		<svg role="img" class="icon" title="Facebook Icon">
 			<use xlink:href="/assets/img/icons.svg#icon-name"></use>
@@ -132,6 +132,8 @@
 				<!--<img src="/images/logo.png" class="logo" alt="Watfeilds Limited Logo">-->
 				<h1 class="flush-bottom">Watfields Full Website Coming Soon</h1>
 				<h2>Precision Engineering Specialists in Sheffield and Yorkshire</h2>
+
+				<h1 class="text-red // bg-red-darkest // p-4 // m-5">fat bags</h1>
 
 				<svg class="icon" aria-labelledby="title-icon-name" aria-describedby="desc-icon-name">
 					<use xlink:href="/assets/img/icons.svg#icon-name"></use>

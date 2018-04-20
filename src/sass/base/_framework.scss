@@ -3,7 +3,9 @@
 ========================================================================== */
 /* See Normalize for addition resets and set-ups */
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
  }
 
@@ -14,54 +16,103 @@
  form,fieldset,legend,
  table,th,td,caption,
  hr {
-	margin:0;
-	padding:0;
+  margin:0;
+  padding:0;
  }
 
  /* ==========================================================================
-	ONE WAY MARGINS
+  ONE WAY MARGINS
  ========================================================================== */
 
  p, h1, h2, h3, h4, h5, h6, hgroup, dd, figure, pre, table, fieldset, legend, hr, time {
- 	@include remit(margin-bottom, $bsu);
+  @apply mb-6; //1.5rem
  }
 
+ /* ==========================================================================
+  FORM INPUT RESETS
+ ========================================================================== */
+
+label,
+input,
+textarea,
+button,
+select,
+option,
+{
+  cursor:pointer;
+  border-radius:0;
+  outline:none;
+  -webkit-appearance: none;
+}
+
+input,
+textarea {
+   &:hover {
+    cursor:text;
+    outline:none;
+  }
+}
 
  /* ==========================================================================
-	MAIN FRAMEWORK DOCUMENT SETUP
+  MAIN FRAMEWORK DOCUMENT SETUP
  ========================================================================== */
 
 html {
-	font-size: 100%;
-	overflow-y: scroll;
+  height:100%;
+  font-size: 100%;
+  // overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body
 {
-	margin:0 auto;
-	font-family:$font-body;
-	// @include font-size($base-font-size);
-	-webkit-font-smoothing: antialiased;
-	color:$color-text;
+  @apply .font-sans;
+  @apply .text-grey;
+  -webkit-font-smoothing: antialiased;
+  font-weight:400;
+  margin:0 auto;
+  height:100%;
 }
 
 .container {
-	@extend %cf;
-	// @extend %padding-container;
-	// max-width:em($x-large);
-	// min-width:em($x-small);
-	margin:0 auto;
+  @apply .max-w-4xl;
+  @apply .mx-auto;
 }
+
+/* ==========================================================================
+  BASE STYLES
+========================================================================== */
+
+a {
+  // @apply .text-teal;
+  text-decoration:none;
+
+  &:hover {
+    // @apply .text-blue;
+    text-decoration:none;
+  }
+}
+
+// a:active {outline:none;}
+
+
+h1, h2, h3, h4, h5, h6, p, li {
+  line-height:1.5;
+}
+
+// strong {
+//   @apply .font-semibold;
+// }
 
 /* ==========================================================================
   HR RULES
 ========================================================================== */
 
 hr {
-	border: solid $grey 0px;
-	border-top:solid $grey 1px;
-	height:0px;
-	clear:both;
+  @apply .border-grey-lighter;
+  @apply .border-t;
+  clear:both;
+  height:0;
 }
 
 /* ==========================================================================
@@ -73,13 +124,13 @@ hr {
  */
 
 ::-moz-selection {
-	background: $color-base;
-	color: $white;
-	text-shadow: none;
+  @apply .text-white;
+  // @apply .bg-blue;
+  text-shadow: none;
 }
 
 ::selection {
-	background: $color-base;
-	color: $white;
-	text-shadow: none;
+  @apply .text-white;
+  // @apply .bg-blue;
+  text-shadow: none;
 }

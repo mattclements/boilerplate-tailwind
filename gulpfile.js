@@ -28,8 +28,9 @@ banner = [
 ].join("\n");
 
 onError = function(err) {
-  $.util.beep("*-*");
-  $.util.log($.util.colors.red(err));
+  $.beeper("*-*");
+  // $.util.log($.util.colors.red(err));
+  $.fancyLog.error($.chalk.red(err));
   this.emit("end");
   this.destroy();
 };
@@ -39,11 +40,12 @@ onError = function(err) {
 ========================================================================== */
 gulp.task("styles", function() {
   const processes = [
-    $.tailwindcss("tailwind.js"),
+    $.tailwindcss(pkg.paths.tailwind.config),
     $.autoprefixer(pkg.autoprefixer),
     $.postcssSorting({
       "properties-order": "alphabetical"
-    })
+    }),
+    $.postcssColorFunction()
   ];
 
   return (gulp
@@ -73,6 +75,10 @@ gulp.task("styles", function() {
 
       .pipe($.header(banner, { pkg: pkg }))
       .pipe(gulp.dest(pkg.paths.dist.css))
+
+      //Now Pipe into the Live Project
+      .pipe($.browserSync.stream()))
+
       .pipe($.postcss([$.cssnano({ preset: "advanced" })]))
       .pipe(
         $.rename({
@@ -88,17 +94,14 @@ gulp.task("styles", function() {
       .pipe($.size({ gzip: false, showFiles: true }))
       .pipe($.size({ gzip: true, showFiles: true }))
 
-      .pipe(gulp.dest(pkg.paths.dist.css))
-
-      //Now Pipe into the Live Project
-      .pipe($.browserSync.stream()) );
+      .pipe(gulp.dest(pkg.paths.dist.css));
 });
 
 /* ==========================================================================
   COPY DEPENDENCIES
 ========================================================================== */
 
-gulp.task("copyJs", function() {
+gulp.task("copyJS", function() {
   // Copy any JS dependencies from node_modeules to our pkg.paths.src.js folder
   gulp
     .src(pkg.vendors.js)
@@ -223,37 +226,41 @@ gulp.task("scripts", function() {
 
     .pipe($.size({ gzip: false, showFiles: true }))
     .pipe($.size({ gzip: true, showFiles: true }))
-
-    .pipe($.browserSync.stream());
 });
 
 /* ==========================================================================
   IMAGES
 ========================================================================== */
-// gulp.task('images', function() {
-//  // gulp.src(pkg.paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
-//  // .pipe(imageOptim.optimize())
+gulp.task('images', function() {
+ // gulp.src(pkg.paths.src.img+'/**/*.+(png|gif|jpg|jpeg)')
+ // .pipe(imageOptim.optimize())
 
-//  gulp.src(pkg.paths.src.img+'/*.svg')
-//  .pipe(changed(pkg.paths.dist.img))
-//  .pipe(svgmin())
-//  .pipe(notify({
-//    message: "<%= file.relative %> Optimised"
-//  }))
+ gulp.src(pkg.paths.src.img+'/**/*.svg')
+ .pipe($.changed(pkg.paths.dist.img))
+ .pipe($.svgmin())
+ .pipe($.notify({
+   message: "SVG Graphic : <%= file.relative %> Optimised"
+ }))
 
-//  .pipe(gulp.dest(pkg.paths.dist.img))
-// });
+ .pipe(gulp.dest(pkg.paths.dist.img))
+});
 
 /* ==========================================================================
-  SVG IMAGES
+  SVG ICONS
 ========================================================================== */
 gulp.task("svg", function() {
-  // const s = $.size();
-
   gulp
     .src(pkg.paths.src.svg + "/*.svg")
-    .pipe($.changed(pkg.paths.dist.svg))
-    .pipe($.svgmin())
+    .pipe($.changed(pkg.paths.templates.svg))
+    .pipe($.svgmin({
+      plugins: [{
+        removeDimensions: true
+      }, {
+        cleanupNumericValues: {
+          floatPrecision: 1
+      }
+      }]
+    }))
     .pipe(
       $.notify({
         message: "<%= file.relative %> Optimised"
@@ -261,30 +268,24 @@ gulp.task("svg", function() {
     )
     .pipe($.size({ gzip: false, showFiles: false }))
     .pipe($.size({ gzip: true, showFiles: false }))
-
-    // .pipe($.notify({
-    //  onLast: true,
-    //  message: () => `Total Size of all SVGs : ${s.prettySize}`,
-    // }))
-
-    .pipe(gulp.dest(pkg.paths.dist.svg));
+    .pipe(gulp.dest(pkg.paths.templates.svg));
 });
 
 /* ==========================================================================
   WATCH
 ========================================================================== */
 gulp.task("watch", function() {
-  gulp.watch(pkg.paths.src.sass + "/**/*", ["styles"]);
-  gulp.watch(pkg.paths.src.js + "/**/*", ["scripts"], $.browserSync.reload);
-  gulp
-    .watch(pkg.paths.src.svg + "/**/*", ["svg"])
-    .on("change", $.browserSync.reload);
-  // gulp.watch(pkg.paths.src.img+'/**/*', ['images']).on('change', browserSync.reload);
+  gulp.watch(pkg.paths.tailwind.config, ["styles"]);
+  gulp.watch(pkg.paths.src.sass + "/**/*.scss", ["styles"]).on('change', $.browserSync.stream);
+  gulp.watch(pkg.paths.src.img, ["images"]).on('change', $.browserSync.stream);
+  gulp.watch(pkg.paths.src.js + "/**/*.js", ["scripts"]).on('change', $.browserSync.reload);
+  // gulp.watch(pkg.paths.src.js + "/**/*", ["scripts"], $.browserSync.reload);
+  gulp.watch(pkg.paths.src.svg + "/**/*.svg", ["svg"]);
 
   gulp
     .watch([
-      "**/*.+(php|html)"
-      // 'craft/templates/**/*.+(php|html|twig)',
+      'craft/templates/**/*.+(php|html|twig)',
+      // "**/*.+(php|html|twig)"
     ])
     .on("change", $.browserSync.reload);
 });
@@ -299,7 +300,7 @@ gulp.task("browserSync", function() {
     port: 8080,
     notify: false,
     online: true,
-    ghostMode: { location: true }
+    reloadOnRestart: true
   });
 });
 
@@ -311,10 +312,9 @@ gulp.task("todo", function() {
     .src([
       pkg.paths.src.js + "/functions.js",
       pkg.paths.src.sass + "/**/*.scss",
-      "!cms/core/**/*",
-      "!cms/addons/**/*",
-      "!vendor/**/*",
-      "**/*.+(php|html)"
+      '!craft/**/*',
+      '!vendor/**/*',
+      '**/*.+(php|html|twig)'
     ])
 
     .pipe(
@@ -336,11 +336,52 @@ gulp.task("todo", function() {
     .pipe(gulp.dest("./"));
 });
 
+
+
+/* ==========================================================================
+  PURGE CSS
+========================================================================== */
+class TailwindExtractor {
+  static extract(content) {
+    return content.match(/[A-z0-9-:\/]+/g) || [];
+  }
+}
+
+gulp.task("purgeCSS", function() {
+  gulp.src(pkg.paths.dist.css + 'style.min.css')
+
+  .pipe($.purgecss({
+    content: pkg.purgecss.files,
+    // whitelistPatterns: [/^bg-/, /^w-/, /^h-/, /^text-/ ],
+    extractors: [
+      { extractor: TailwindExtractor,
+        // Specify the file extensions to include when scanning for class names.
+        extensions: ["html", "js", "twig"]
+      }
+    ]}))
+
+  .pipe(
+      $.rename({
+        suffix: ".purge"
+      })
+    )
+
+  .pipe(
+      $.notify({
+        message: "CSS Purged - <%= file.relative %>"
+      })
+    )
+  .pipe(gulp.dest(pkg.paths.dist.css))
+  .pipe($.size({ gzip: false, showFiles: false }))
+  .pipe($.size({ gzip: true, showFiles: false }))
+});
+
 /* ==========================================================================
   GULP TASKS
 ========================================================================== */
-gulp.task("default", ["styles", "scripts", "svg", "browserSync", "watch"]);
+gulp.task("default", ["styles", "scripts", "images", "svg", "browserSync", "watch"]);
 gulp.task("compile", ["styles", "scripts"]);
+
 
 //TODO: IMAGE OPTIM
 //TODO: Delete build file if src file is removed

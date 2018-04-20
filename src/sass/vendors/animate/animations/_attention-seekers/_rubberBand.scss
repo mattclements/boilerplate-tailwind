@@ -1,5 +1,5 @@
-$keyframe-name: $name-fadeInUp;
-$class-name: namespace($name-fadeInUp);
+$keyframe-name: $name-rubberBand;
+$class-name: namespace($name-rubberBand);
 
 @mixin rubberBand($count: $countDefault, $duration: $durationDefault, $delay: $delayDefault, $function: $functionDefault, $fill: $fillDefault, $visibility: $visibilityDefault) {
   @include animation-name($keyframe-name);
@@ -11,7 +11,7 @@ $class-name: namespace($name-fadeInUp);
   @include visibility($visibility);
 }
 
-@if useModule($use-fadeInUp) {
+@if useModule($use-rubberBand) {
   @include keyframes($keyframe-name) {
     0% {
       @include transform(scale3d(1, 1, 1));
